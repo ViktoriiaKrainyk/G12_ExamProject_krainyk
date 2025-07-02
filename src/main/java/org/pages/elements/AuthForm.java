@@ -5,7 +5,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.pages.CommonActionsWithElements;
-import org.pages.HomePage;
 
 public class AuthForm extends CommonActionsWithElements {
     Logger logger = Logger.getLogger(getClass());
