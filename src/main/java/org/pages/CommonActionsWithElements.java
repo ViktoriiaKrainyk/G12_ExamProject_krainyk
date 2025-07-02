@@ -71,6 +71,12 @@ public class CommonActionsWithElements {
         logger.info("Text in placeholder matches expected text: " + expectedText);
     }
 
+    protected void checkIsRedirectToExpectedPage(String expectedUrl) {
+        String currentUrl = webDriver.getCurrentUrl();
+        Assert.assertEquals("URL does not match expected URL", expectedUrl, currentUrl);
+        logger.info("Redirected to expected page: " + expectedUrl);
+    }
+
     private void printErrorAndStopTest(Exception e) {
         logger.error("Error while working with element: " + e.getMessage());
         Assert.fail("Error while working with element: " + e.getMessage());

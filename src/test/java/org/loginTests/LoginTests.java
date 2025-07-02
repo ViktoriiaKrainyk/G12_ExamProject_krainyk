@@ -33,11 +33,13 @@ public class LoginTests extends BaseTest {
                     .checkCloseAuthFormButtonIsDisplayed()
                     .enterTextInInputEmail(VALID_LOGIN_UI)
                     .enterTextInInputPassword(VALID_PASSWORD_UI)
-                    .clickOnButtonSignIn()
+                    .clickOnButtonSignIn(pageProvider.getHomePage())
+                .getHeaderElement()
                     .checkAccountButtonIsDisplayed()
                     .checkTextInAccountButton("Кабінет")
                     .checkLoginToAccountButtonIsNotDisplayed()
                     .checkFavoritesCountIsDisplayed()
-                    .clickOnAccountButton();
+                    .clickOnAccountButton()
+                .checkIsRedirectToPersonalAccountPage();
     }
 }

@@ -110,9 +110,9 @@ public class AuthForm extends CommonActionsWithElements {
         return this;
     }
 
-    public HeaderElement clickOnButtonSignIn() {
+    public <T> T clickOnButtonSignIn(T currentPage) {
         clickOnElement(buttonSignIn);
         logger.info("Sign In button was clicked");
-        return new HeaderElement(webDriver);
+        return currentPage;
     }
 }
