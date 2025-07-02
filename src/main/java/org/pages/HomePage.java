@@ -1,9 +1,12 @@
 package org.pages;
 
 
+import org.data.TestData;
 import org.openqa.selenium.WebDriver;
-import org.pages.elements.AuthForm;
 import org.pages.elements.HeaderElement;
+
+import static org.data.TestData.VALID_LOGIN_UI;
+import static org.data.TestData.VALID_PASSWORD_UI;
 
 public class HomePage extends ParentPage{
     public HomePage(WebDriver webDriver) {
@@ -18,5 +21,21 @@ public class HomePage extends ParentPage{
 
     public HeaderElement getHeaderElement() {
         return new HeaderElement(webDriver);
+    }
+
+    public HomePage openLoginPopUpAndFillLoginFormWithValidData() {
+        openHomePage();
+        getHeaderElement()
+                .clickOnLoginToAccountButton()
+                .getAuthForm()
+                    .enterTextInInputEmail(VALID_LOGIN_UI)
+                    .enterTextInInputPassword(VALID_PASSWORD_UI)
+                    .clickOnButtonSignIn(this);
+        return this;
+    }
+
+    public HomePage checkIsRedirectToHomePage() {
+        checkIsRedirectToExpectedPage(baseUrl);
+        return this;
     }
 }
