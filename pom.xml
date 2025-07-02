@@ -15,8 +15,6 @@
   </properties>
 
   <!-- libs are saved in the .m2 folder -->
-
-
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
