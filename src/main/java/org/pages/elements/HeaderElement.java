@@ -1,12 +1,15 @@
 package org.pages.elements;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.pages.AccountPage;
+import org.pages.PersonalAccountPage;
 import org.pages.CommonActionsWithElements;
 
 public class HeaderElement extends CommonActionsWithElements {
+    Logger logger = Logger.getLogger(getClass());
+
     @FindBy(xpath = "//div[@id='profile_desktop']//button[contains(@class,'profile')]")
     private WebElement LoginToAccountButton;
 
@@ -64,8 +67,9 @@ public class HeaderElement extends CommonActionsWithElements {
         return this;
     }
 
-    public AccountPage clickOnAccountButton() {
+    public PersonalAccountPage clickOnAccountButton() {
         clickOnElement(AccountButton);
-        return new AccountPage(webDriver);
+        logger.info("Click on Account Button");
+        return new PersonalAccountPage(webDriver);
     }
 }

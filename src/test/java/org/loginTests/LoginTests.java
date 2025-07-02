@@ -39,6 +39,7 @@ public class LoginTests extends BaseTest {
                     .checkTextInAccountButton("Кабінет")
                     .checkLoginToAccountButtonIsNotDisplayed()
                     .checkFavoritesCountIsDisplayed()
-                    .clickOnAccountButton();
+                    .clickOnAccountButton()
+                .checkIsRedirectToPersonalAccountPage();
     }
 }
