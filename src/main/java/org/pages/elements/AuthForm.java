@@ -113,6 +113,6 @@ public class AuthForm extends CommonActionsWithElements {
     public <T> T clickOnButtonSignIn(T currentPage) {
         clickOnElement(buttonSignIn);
         logger.info("Sign In button was clicked");
-        return curentPage;
+        return currentPage;
     }
 }
