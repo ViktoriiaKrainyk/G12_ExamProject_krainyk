@@ -61,7 +61,7 @@ public class AccountSettingsTests extends BaseTest {
                 .enterTextIntoInputSurname(UPDATEDSURNAME)
                 .setBirthdayValue(UPDATEDDATEOFBIRTH, UPDATEDMONTHOFBIRTH, UPDATEDYEAROFBIRTH)
                 .checkIsCalendarNotDisplayed()
-                .checkValueInInputBirthday(String.format("%02d.%02d.%d", UPDATEDDATEOFBIRTH, UPDATEDMONTHOFBIRTH, UPDATEDYEAROFBIRTH))
+                .checkValueInInputBirthday(formatBirthday(UPDATEDDATEOFBIRTH, UPDATEDMONTHOFBIRTH, UPDATEDYEAROFBIRTH))
                 .checkValueInInputEmail(VALID_LOGIN_UI)
                 .clickOnSaveButton()
                 .getMessagePopUp().checkMessagePopUpIsDisplayed()
