@@ -71,6 +71,22 @@ public class CommonActionsWithElements {
         logger.info("Text in placeholder matches expected text: " + expectedText);
     }
 
+    protected String getValueFromElement(WebElement webElement) {
+        try {
+            String value = webElement.getAttribute("value");
+            logger.info("Value from element = " + value);
+            return value != null ? value : "";
+        } catch (Exception e) {
+            printErrorAndStopTest(e);
+            return "";
+        }
+    }
+
+    protected void checkValueInElement(WebElement webElement, String expectedValue) {
+        Assert.assertEquals("Value in element does not match expected value", expectedValue, getValueFromElement(webElement));
+        logger.info("Value in element matches expected value: " + expectedValue);
+    }
+
     protected void checkIsRedirectToExpectedPage(String expectedUrl) {
         String currentUrl = webDriver.getCurrentUrl();
         Assert.assertEquals("URL does not match expected URL", expectedUrl, currentUrl);

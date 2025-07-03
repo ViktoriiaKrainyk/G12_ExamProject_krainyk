@@ -18,6 +18,18 @@ public class PersonalAccountPage extends ParentPage {
     @FindBy(xpath = "//li[contains(text(),'Адресна книга')]")
     private WebElement addressBookTab;
 
+    @FindBy(id = "name")
+    private WebElement inputName;
+
+    @FindBy(id = "surname")
+    private WebElement inputSurname;
+
+    @FindBy(id = "birthday")
+    private WebElement inputBirthday;
+
+    @FindBy(id = "email")
+    private WebElement inputEmail;
+
     public PersonalAccountPage(WebDriver webDriver) {
         super(webDriver);
     }
@@ -46,6 +58,40 @@ public class PersonalAccountPage extends ParentPage {
         }
     }
 
+    public PersonalAccountPage checkTabsNames() {
+        List<String> actualTabNames = getListOfTabNames();
+        List<String> expectedTabNames = Arrays.asList("Контактна інформація", "Адресна книга", "Список бажань", "Історія замовлень", "Вихід");
+        Assert.assertEquals("Tabs names are not as expected", expectedTabNames, actualTabNames);
+        logger.info("Tabs names are as expected: " + actualTabNames);
+        return this;
+    }
+
+    public PersonalAccountPage checkIsContactInfoTabIsActive() {
+        checkOnlyOneTabIsActive();
+        checkIsTabActive(contactInfoTab);
+        return this;
+    }
+
+    public PersonalAccountPage checkValueInInputName(String expectedValue) {
+        checkValueInElement(inputName, expectedValue);
+        return this;
+    }
+
+    public PersonalAccountPage checkValueInInputSurname(String expectedValue) {
+        checkValueInElement(inputSurname, expectedValue);
+        return this;
+    }
+
+    public PersonalAccountPage checkValueInInputBirthday(String expectedValue) {
+        checkValueInElement(inputBirthday, expectedValue);
+        return this;
+    }
+
+    public PersonalAccountPage checkValueInInputEmail(String expectedValue) {
+        checkValueInElement(inputEmail, expectedValue);
+        return this;
+    }
+
     private void checkIsTabActive(WebElement tab) {
         Assert.assertTrue(getElementName(tab) + " is not active, but it should be", isActiveTab(tab));
         logger.info(getElementName(tab) + " is active as expected");
@@ -64,21 +110,7 @@ public class PersonalAccountPage extends ParentPage {
                 By.xpath("//ul[@class='private-office__tabs']//li"));
     }
 
-    public PersonalAccountPage checkTabsNames() {
-        List<String> actualTabNames = getListOfTabNames();
-        List<String> expectedTabNames = Arrays.asList("Контактна інформація", "Адресна книга", "Список бажань", "Історія замовлень", "Вихід");
-        Assert.assertEquals("Tabs names are not as expected", expectedTabNames, actualTabNames);
-        logger.info("Tabs names are as expected: " + actualTabNames);
-        return this;
-    }
-
-    public PersonalAccountPage checkIsContactInfoTabIsActive() {
-        checkOnlyOneTabIsActive();
-        checkIsTabActive(contactInfoTab);
-        return this;
-    }
-
-    public PersonalAccountPage checkOnlyOneTabIsActive() {
+    private PersonalAccountPage checkOnlyOneTabIsActive() {
         List<WebElement> tabs = getListOfTabs();
         int activeTabsCount = Math.toIntExact(tabs.stream()
                 .filter(this::isActiveTab)
