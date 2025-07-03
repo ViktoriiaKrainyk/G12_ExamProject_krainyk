@@ -13,7 +13,7 @@ public class PageProvider {
         return new HomePage(webDriver);
     }
 
-    public PersonalAccountPage getAccountPage() {
+    public PersonalAccountPage getPersonalAccountPage() {
         return new PersonalAccountPage(webDriver);
     }
 }
