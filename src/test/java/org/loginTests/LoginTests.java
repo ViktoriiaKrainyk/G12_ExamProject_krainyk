@@ -16,30 +16,47 @@ public class LoginTests extends BaseTest {
                     .checkLoginToAccountButtonIsDisplayed()
                     .checkTextInLoginToAccountButton("Вхід до кабінету")
                     .checkFavoritesCountIsNotDisplayed()
-                    .clickOnLoginToAccountButton()
-                .getAuthForm()
-                    .checkAuthFormTitleIsDisplayed()
-                    .checkTextInAuthFormTitle("вхід до особистого кабінету")
-                    .checkEmailInputIsDisplayed()
-                    .checkPlaceholderInEmailInput("E-mail")
-                    .checkPasswordInputIsDisplayed()
-                    .checkPlaceholderInPasswordInput("Пароль")
-                    .checkSignInButtonIsDisplayed()
-                    .checkTextInSignInButton("Увійти")
-                    .checkForgotPasswordButtonIsDisplayed()
-                    .checkTextInForgotPasswordButton("Забули пароль?")
-                    .checkSignUpButtonIsDisplayed()
-                    .checkTextInSignUpButton("Реєстрація")
-                    .checkCloseAuthFormButtonIsDisplayed()
-                    .enterTextInInputEmail(VALID_LOGIN_UI)
-                    .enterTextInInputPassword(VALID_PASSWORD_UI)
-                    .clickOnButtonSignIn(pageProvider.getHomePage())
-                .getHeaderElement()
-                    .checkAccountButtonIsDisplayed()
-                    .checkTextInAccountButton("Кабінет")
-                    .checkLoginToAccountButtonIsNotDisplayed()
-                    .checkFavoritesCountIsDisplayed()
-                    .clickOnAccountButton()
-                .checkIsRedirectToPersonalAccountPage();
+                    .clickOnLoginToAccountButton();
+
+        authFormVerification();
+        enterValidLoginData();
+        checkLoginSuccess();
     }
+
+    private void authFormVerification(){
+        pageProvider.getHomePage().getHeaderElement().getAuthForm()
+                .checkAuthFormIsDisplayed()
+                .checkAuthFormTitleIsDisplayed()
+                .checkTextInAuthFormTitle("вхід до особистого кабінету")
+                .checkEmailInputIsDisplayed()
+                .checkPlaceholderInEmailInput("E-mail")
+                .checkPasswordInputIsDisplayed()
+                .checkPlaceholderInPasswordInput("Пароль")
+                .checkSignInButtonIsDisplayed()
+                .checkTextInSignInButton("Увійти")
+                .checkForgotPasswordButtonIsDisplayed()
+                .checkTextInForgotPasswordButton("Забули пароль?")
+                .checkSignUpButtonIsDisplayed()
+                .checkTextInSignUpButton("Реєстрація")
+                .checkCloseAuthFormButtonIsDisplayed();
+    }
+
+    private void enterValidLoginData() {
+        pageProvider.getHomePage().getHeaderElement().getAuthForm()
+                .enterTextInInputEmail(TestData.VALID_LOGIN_UI)
+                .enterTextInInputPassword(TestData.VALID_PASSWORD_UI)
+                .clickOnButtonSignIn(pageProvider.getHomePage());
+    }
+
+    private void checkLoginSuccess() {
+        pageProvider.getHomePage().getHeaderElement()
+                .checkAccountButtonIsDisplayed()
+                .checkTextInAccountButton("Кабінет")
+                .checkLoginToAccountButtonIsNotDisplayed()
+                .checkFavoritesCountIsDisplayed()
+                .clickOnAccountButton();
+        pageProvider.getPersonalAccountPage().checkIsRedirectToPersonalAccountPage();
+    }
+
+
 }

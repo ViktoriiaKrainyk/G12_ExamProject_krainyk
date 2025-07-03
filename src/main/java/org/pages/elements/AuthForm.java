@@ -4,10 +4,16 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.pages.CommonActionsWithElements;
+
+import java.time.Duration;
 
 public class AuthForm extends CommonActionsWithElements {
     Logger logger = Logger.getLogger(getClass());
+    @FindBy(xpath = "//form[@id='form-auth']")
+    private WebElement authForm;
 
     @FindBy(xpath = "//form[@id='form-auth']//h2")
     private WebElement headerAuthForm;
@@ -32,6 +38,13 @@ public class AuthForm extends CommonActionsWithElements {
 
     public AuthForm (WebDriver webDriver) {
         super(webDriver);
+    }
+
+    public AuthForm checkAuthFormIsDisplayed() {
+        new WebDriverWait(webDriver, Duration.ofSeconds(5))
+                .until(ExpectedConditions.elementToBeClickable(authForm));
+        logger.info("Auth Form is displayed as expected");
+        return this;
     }
 
     public AuthForm checkAuthFormTitleIsDisplayed() {
