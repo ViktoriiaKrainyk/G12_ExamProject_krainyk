@@ -2,9 +2,13 @@ package org.pages;
 
 import org.apache.log4j.Logger;
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
+
+import java.util.List;
+import java.util.NoSuchElementException;
 
 public class CommonActionsWithElements {
     protected WebDriver webDriver;
@@ -82,6 +86,21 @@ public class CommonActionsWithElements {
         }
     }
 
+    protected void selectValueFromTheList(String dropdownXpath, String logName, int value) {
+        try {
+            List<WebElement> options = webDriver.findElements(By.xpath(dropdownXpath));
+            if (options.isEmpty()) {
+                String message = "Value '" + value + "' did not found " + logName + " dropdown!";
+                logger.error(message);
+                throw new NoSuchElementException(message);
+            }
+            options.get(0).click();
+            logger.info("Value '" + value + "' was selected in " + logName + " dropdown");
+        } catch (Exception e) {
+            printErrorAndStopTest(e);
+        }
+    }
+
     protected void checkValueInElement(WebElement webElement, String expectedValue) {
         Assert.assertEquals("Value in element does not match expected value", expectedValue, getValueFromElement(webElement));
         logger.info("Value in element matches expected value: " + expectedValue);
@@ -91,6 +110,21 @@ public class CommonActionsWithElements {
         String currentUrl = webDriver.getCurrentUrl();
         Assert.assertEquals("URL does not match expected URL", expectedUrl, currentUrl);
         logger.info("Redirected to expected page: " + expectedUrl);
+    }
+
+    protected boolean isActiveElement(WebElement element) {
+        try {
+            boolean state = element.getAttribute("class").contains("active");
+            if (state) {
+                logger.info("Element is active");
+            } else {
+                logger.info("Element is not active");
+            }
+            return state;
+        } catch (Exception e) {
+            logger.info("Error while checking if tab is active: " + e.getMessage());
+            return false;
+        }
     }
 
     private void printErrorAndStopTest(Exception e) {
