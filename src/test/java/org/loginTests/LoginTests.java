@@ -4,9 +4,6 @@ import org.baseTest.BaseTest;
 import org.data.TestData;
 import org.junit.Test;
 
-import static org.data.TestData.VALID_LOGIN_UI;
-import static org.data.TestData.VALID_PASSWORD_UI;
-
 public class LoginTests extends BaseTest {
     @Test
     public void validLoginTest() {

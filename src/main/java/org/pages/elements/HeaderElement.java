@@ -57,6 +57,10 @@ public class HeaderElement extends CommonActionsWithElements {
         return this;
     }
 
+    public boolean isAccountButtonForLoggedUser() {
+       return isElementDisplayed(AccountButton);
+    }
+
     public HeaderElement checkFavoritesCountIsDisplayed() {
         checkIsElementDisplayed(favoritesCount);
         return this;

@@ -102,7 +102,7 @@ public class PersonalAccountPage extends ParentPage {
         clickOnElement(monthDropdown);
         selectValueInMonthDropdown(month);
         selectValueFromTheListOfDate(date);
-        logger.info(String.format("Birthday value set to: %s.%s", month, year));
+        logger.info(String.format("Birthday value set to: %s.%s.%s", date, month, year));
         return this;
     }
 

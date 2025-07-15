@@ -1,7 +1,5 @@
 package org.pages;
 
-
-import org.data.TestData;
 import org.openqa.selenium.WebDriver;
 import org.pages.elements.HeaderElement;
 
@@ -36,6 +34,22 @@ public class HomePage extends ParentPage{
 
     public HomePage checkIsRedirectToHomePage() {
         checkIsRedirectToExpectedPage(baseUrl);
+        return this;
+    }
+
+    public HomePage openLoginPopUpAndFillLoginFormIfNeeded() {
+        getHeaderElement();
+        if (getHeaderElement().isAccountButtonForLoggedUser()) {
+            logger.info("User is already logged in");
+        } else {
+            getHeaderElement().clickOnLoginToAccountButton()
+                    .getAuthForm()
+                        .enterTextInInputEmail(VALID_LOGIN_UI)
+                        .enterTextInInputPassword(VALID_PASSWORD_UI)
+                        .clickOnButtonSignIn(this);
+            checkIsRedirectToHomePage();
+            logger.info("User was logged in.");
+        }
         return this;
     }
 }

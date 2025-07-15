@@ -19,6 +19,8 @@ public class AccountSettingsTests extends BaseTest {
     final int UPDATEDMONTHOFBIRTH = 12;
     final int UPDATEDYEAROFBIRTH = 2013;
 
+    final String DATASUCCESSFULLYSAVEDMESSAGE = "Відмінно! Данні успішно збережені";
+
 
     @Test
     public void updateContanctInfoTest() {
@@ -37,13 +39,16 @@ public class AccountSettingsTests extends BaseTest {
 
     @After
     public void resetContactInfo() {
-        pageProvider.getPersonalAccountPage()
+        pageProvider.getHomePage()
+                .openLoginPopUpAndFillLoginFormIfNeeded()
+                .getHeaderElement().clickOnAccountButton()
+                .checkIsRedirectToPersonalAccountPage()
                 .enterTextIntoInputName(NAME)
                 .enterTextIntoInputSurname(SURNAME)
                 .setBirthdayValue(DATEOFBIRTH, MONTHOFBIRTH, YEAROFBIRTH)
                 .clickOnSaveButton()
                 .getMessagePopUp().checkMessagePopUpIsDisplayed()
-                .checkMessageTextInMessagePopUp("Відмінно! Данні успішно збережені");
+                .checkMessageTextInMessagePopUp(DATASUCCESSFULLYSAVEDMESSAGE);
     }
 
     private void checkInitialContactInfo() {
@@ -65,7 +70,7 @@ public class AccountSettingsTests extends BaseTest {
                 .checkValueInInputEmail(VALID_LOGIN_UI)
                 .clickOnSaveButton()
                 .getMessagePopUp().checkMessagePopUpIsDisplayed()
-                .checkMessageTextInMessagePopUp("Відмінно! Данні успішно збережені")
+                .checkMessageTextInMessagePopUp(DATASUCCESSFULLYSAVEDMESSAGE)
                 .closeMessagePopUp();
     }
 
