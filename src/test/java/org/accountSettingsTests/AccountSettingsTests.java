@@ -1,86 +1,40 @@
 package org.accountSettingsTests;
 
 import org.baseTest.BaseTest;
+import org.data.UserData;
 import org.junit.After;
 import org.junit.Test;
 
-import static org.data.TestData.VALID_LOGIN_UI;
+import static org.data.TestLoginData.VALID_LOGIN_UI;
 
 public class AccountSettingsTests extends BaseTest {
-    final String NAME = "Viktoriia";
-    final String SURNAME = "Krainyk";
-    final int DATEOFBIRTH = 21;
-    final int MONTHOFBIRTH = 4;
-    final int YEAROFBIRTH = 1993;
+    final UserData INITIAL_USER = new UserData("Viktoriia", "Krainyk", 21, 4, 1993);
+    final UserData UPDATED_USER = new UserData("Vika", "Krain", 3, 12, 2013);
 
-    final String UPDATEDNAME = "Vika";
-    final String UPDATEDSURNAME = "Krain";
-    final int UPDATEDDATEOFBIRTH = 3;
-    final int UPDATEDMONTHOFBIRTH = 12;
-    final int UPDATEDYEAROFBIRTH = 2013;
+    final String DATASUCCESSFULLYSAVEDMESSAGE = "Відмінно! Данні успішно збережені";
 
 
     @Test
-    public void updateContanctInfoTest() {
+    public void updateContanctInfoTest_ukr() {
         pageProvider.getHomePage()
                 .openLoginPopUpAndFillLoginFormWithValidData()
                 .checkIsRedirectToHomePage()
                 .getHeaderElement().clickOnAccountButton()
                 .checkIsRedirectToPersonalAccountPage()
                 .checkTabsNames()
-                .checkIsContactInfoTabIsActive();
-
-        checkInitialContactInfo();
-        updateContactInfo();
-        verifyUpdatedContactInfo();
+                .checkIsExitButtonIsDisplayed()
+                .checkIsContactInfoTabIsActive()
+                .checkUserContactInfo(INITIAL_USER.name, INITIAL_USER.surname, INITIAL_USER.dayOfBirth, INITIAL_USER.monthOfBirth, INITIAL_USER.yearOfBirth, VALID_LOGIN_UI)
+                .updateUserContactInfo(UPDATED_USER.name, UPDATED_USER.surname, UPDATED_USER.dayOfBirth,UPDATED_USER.monthOfBirth, UPDATED_USER.yearOfBirth, DATASUCCESSFULLYSAVEDMESSAGE)
+                .checkUserContactInfo(UPDATED_USER.name, UPDATED_USER.surname, UPDATED_USER.dayOfBirth,UPDATED_USER.monthOfBirth, UPDATED_USER.yearOfBirth, VALID_LOGIN_UI);
     }
 
     @After
     public void resetContactInfo() {
-        pageProvider.getPersonalAccountPage()
-                .enterTextIntoInputName(NAME)
-                .enterTextIntoInputSurname(SURNAME)
-                .setBirthdayValue(DATEOFBIRTH, MONTHOFBIRTH, YEAROFBIRTH)
-                .clickOnSaveButton()
-                .getMessagePopUp().checkMessagePopUpIsDisplayed()
-                .checkMessageTextInMessagePopUp("Відмінно! Данні успішно збережені");
+        pageProvider.getHomePage()
+                .openLoginPopUpAndFillLoginFormIfNeeded()
+                .getHeaderElement().clickOnAccountButton()
+                .checkIsRedirectToPersonalAccountPage()
+                .updateUserContactInfo(INITIAL_USER.name, INITIAL_USER.surname, INITIAL_USER.dayOfBirth, INITIAL_USER.monthOfBirth, INITIAL_USER.yearOfBirth, DATASUCCESSFULLYSAVEDMESSAGE);
     }
-
-    private void checkInitialContactInfo() {
-        pageProvider.getPersonalAccountPage()
-                .checkValueInInputName(NAME)
-                .checkValueInInputSurname(SURNAME)
-                .checkIsCalendarNotDisplayed()
-                .checkValueInInputBirthday(formatBirthday(DATEOFBIRTH, MONTHOFBIRTH, YEAROFBIRTH))
-                .checkValueInInputEmail(VALID_LOGIN_UI);
-    }
-
-    private void updateContactInfo() {
-        pageProvider.getPersonalAccountPage()
-                .enterTextIntoInputName(UPDATEDNAME)
-                .enterTextIntoInputSurname(UPDATEDSURNAME)
-                .setBirthdayValue(UPDATEDDATEOFBIRTH, UPDATEDMONTHOFBIRTH, UPDATEDYEAROFBIRTH)
-                .checkIsCalendarNotDisplayed()
-                .checkValueInInputBirthday(formatBirthday(UPDATEDDATEOFBIRTH, UPDATEDMONTHOFBIRTH, UPDATEDYEAROFBIRTH))
-                .checkValueInInputEmail(VALID_LOGIN_UI)
-                .clickOnSaveButton()
-                .getMessagePopUp().checkMessagePopUpIsDisplayed()
-                .checkMessageTextInMessagePopUp("Відмінно! Данні успішно збережені")
-                .closeMessagePopUp();
-    }
-
-    private void verifyUpdatedContactInfo() {
-        pageProvider.getPersonalAccountPage().getHeaderElement()
-                .clickOnAccountButton()
-                .checkValueInInputName(UPDATEDNAME)
-                .checkValueInInputSurname(UPDATEDSURNAME)
-                .checkValueInInputBirthday(formatBirthday(UPDATEDDATEOFBIRTH, UPDATEDMONTHOFBIRTH, UPDATEDYEAROFBIRTH))
-                .checkValueInInputEmail(VALID_LOGIN_UI);
-
-    }
-
-    private String formatBirthday(int day, int month, int year) {
-        return String.format("%02d.%02d.%d", day, month, year);
-    }
-
 }

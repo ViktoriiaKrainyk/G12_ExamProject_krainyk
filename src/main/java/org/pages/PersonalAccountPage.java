@@ -10,13 +10,14 @@ import org.pages.elements.MessagePopUp;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class PersonalAccountPage extends ParentPage {
-    @FindBy(xpath = "//li[contains(text(),'Контактна інформація')]")
+    @FindBy(xpath = "//li[@data-tab='contact-info']")
     private WebElement contactInfoTab;
 
-    @FindBy(xpath = "//li[contains(text(),'Адресна книга')]")
+    @FindBy(xpath = "//li[@data-tab='address-book']")
     private WebElement addressBookTab;
 
     @FindBy(id = "name")
@@ -40,11 +41,19 @@ public class PersonalAccountPage extends ParentPage {
     @FindBy(xpath = "//span[@class='down-month']")
     private WebElement monthDropdown;
 
-    @FindBy(xpath = "//button[text()='Зберегти']")
+    @FindBy(xpath = "//button[@type='submit' and @class='button']")
     private WebElement saveButton;
+
+    @FindBy (xpath = "//li[contains(@class,'exit')]")
+    private WebElement exitButton;
 
     public PersonalAccountPage(WebDriver webDriver) {
         super(webDriver);
+    }
+
+    @Override
+    protected String getRelativeUrl() {
+        return "/user";
     }
 
     public HeaderElement getHeaderElement() {
@@ -56,15 +65,21 @@ public class PersonalAccountPage extends ParentPage {
     }
 
     public PersonalAccountPage checkIsRedirectToPersonalAccountPage() {
-        checkIsRedirectToExpectedPage(baseUrl + "/user");
+        checkUrl();
+        // TODO check some unique element on the home page
         return this;
     }
 
     public PersonalAccountPage checkTabsNames() {
         List<String> actualTabNames = getListOfTabNames();
-        List<String> expectedTabNames = Arrays.asList("Контактна інформація", "Адресна книга", "Список бажань", "Історія замовлень", "Вихід");
+        List<String> expectedTabNames = Arrays.asList("contact-info", "address-book", "wish-list", "history-order");
         Assert.assertEquals("Tabs names are not as expected", expectedTabNames, actualTabNames);
         logger.info("Tabs names are as expected: " + actualTabNames);
+        return this;
+    }
+
+    public PersonalAccountPage checkIsExitButtonIsDisplayed() {
+        checkIsElementDisplayed(exitButton);
         return this;
     }
 
@@ -74,27 +89,48 @@ public class PersonalAccountPage extends ParentPage {
         return this;
     }
 
-    public PersonalAccountPage checkValueInInputName(String expectedValue) {
+    public PersonalAccountPage checkUserContactInfo(String name, String surname, int date, int month, int year, String email) {
+        checkValueInInputName(name);
+        checkValueInInputSurname(surname);
+        checkIsCalendarNotDisplayed();
+        checkValueInInputBirthday(formatBirthday(date, month, year));
+        checkValueInInputEmail(email);
+        return this;
+    }
+
+    public PersonalAccountPage updateUserContactInfo(String name, String surname, int date, int month, int year, String dataSucessfullySavedMessage) {
+        enterTextIntoInputName(name);
+        enterTextIntoInputSurname(surname);
+        checkIsCalendarNotDisplayed();
+        setBirthdayValue(date, month, year);
+        clickOnSaveButton();
+        getMessagePopUp().checkMessagePopUpIsDisplayed()
+                .checkMessageTextInMessagePopUp(dataSucessfullySavedMessage)
+                .closeMessagePopUp();
+        return this;
+    }
+
+    private PersonalAccountPage checkValueInInputName(String expectedValue) {
         checkValueInElement(inputName, expectedValue);
         return this;
     }
 
-    public PersonalAccountPage checkValueInInputSurname(String expectedValue) {
+    private PersonalAccountPage checkValueInInputSurname(String expectedValue) {
         checkValueInElement(inputSurname, expectedValue);
         return this;
     }
 
-    public PersonalAccountPage checkValueInInputBirthday(String expectedValue) {
+    private PersonalAccountPage checkValueInInputBirthday(String expectedValue) {
         checkValueInElement(inputBirthday, expectedValue);
         return this;
     }
 
-    public PersonalAccountPage checkValueInInputEmail(String expectedValue) {
+    private PersonalAccountPage checkValueInInputEmail(String expectedValue) {
         checkValueInElement(inputEmail, expectedValue);
         return this;
     }
 
-    public PersonalAccountPage setBirthdayValue(int date, int month, int year) {
+    private PersonalAccountPage setBirthdayValue(int date, int month, int year) {
         clickOnElement(inputBirthday);
         checkIsCalendarDisplayed();
         clickOnElement(yearDropdown);
@@ -102,64 +138,64 @@ public class PersonalAccountPage extends ParentPage {
         clickOnElement(monthDropdown);
         selectValueInMonthDropdown(month);
         selectValueFromTheListOfDate(date);
-        logger.info(String.format("Birthday value set to: %s.%s", month, year));
+        logger.info(String.format("Birthday value set to: %s.%s.%s", date, month, year));
         return this;
     }
 
-    public PersonalAccountPage selectValueInYearDropdown(int year) {
+    private PersonalAccountPage selectValueInYearDropdown(int year) {
         String yearXpath = "//span[@class='down-year']//div[@data-value='" + year + "']";
         selectValueFromTheList(yearXpath, "year", year);
         return this;
     }
 
-    public PersonalAccountPage selectValueInMonthDropdown(int value) {
+    private PersonalAccountPage selectValueInMonthDropdown(int value) {
         int month = value - 1;
         String monthXpath = "//span[@class='down-month']//div[@data-value='" + month + "']";
         selectValueFromTheList(monthXpath, "month", month);
         return this;
     }
 
-    public PersonalAccountPage selectValueFromTheListOfDate(int date) {
+    private PersonalAccountPage selectValueFromTheListOfDate(int date) {
         String dateXpath = "//table//td/span[@class='day' and text()='" + date + "']";
         selectValueFromTheList(dateXpath, "date", date);
         return this;
     }
 
-    public PersonalAccountPage checkIsCalendarDisplayed() {
+    private PersonalAccountPage checkIsCalendarDisplayed() {
         checkIsElementDisplayed(calendar);
         logger.info("Calendar is displayed as expected");
         return this;
     }
 
-    public PersonalAccountPage checkIsCalendarNotDisplayed() {
+    private PersonalAccountPage checkIsCalendarNotDisplayed() {
         checkIsElementNotDisplayed(calendar);
         logger.info("Calendar is not displayed as expected");
         return this;
     }
 
-    public PersonalAccountPage enterTextIntoInputName(String text) {
+    private PersonalAccountPage enterTextIntoInputName(String text) {
         clearAndEnterTextToElement(inputName, text);
         logger.info("Entered text into input name: " + text);
         return this;
     }
 
-    public PersonalAccountPage enterTextIntoInputSurname(String text) {
+    private PersonalAccountPage enterTextIntoInputSurname(String text) {
         clearAndEnterTextToElement(inputSurname, text);
         logger.info("Entered text into input surname: " + text);
         return this;
     }
 
-    public PersonalAccountPage clickOnSaveButton() {
+    private PersonalAccountPage clickOnSaveButton() {
         clickOnElement(saveButton);
         logger.info("Save button was clicked");
         return this;
     }
 
     private List<String> getListOfTabNames() {
-        return webDriver.findElements(
-                        By.xpath("//ul[@class='private-office__tabs']//li"))
+        return webDriver.findElements(By.xpath("//ul[@class='private-office__tabs']//li"))
                 .stream()
-                .map(WebElement::getText)
+                .map(el -> el.getAttribute("data-tab"))
+                .filter(Objects::nonNull)
                 .collect(Collectors.toList());
     }
 
@@ -195,4 +231,9 @@ public class PersonalAccountPage extends ParentPage {
         }
         return elementName;
     }
+
+    private String formatBirthday(int day, int month, int year) {
+        return String.format("%02d.%02d.%d", day, month, year);
+    }
+
 }

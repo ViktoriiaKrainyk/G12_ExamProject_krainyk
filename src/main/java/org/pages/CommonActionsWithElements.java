@@ -106,12 +106,6 @@ public class CommonActionsWithElements {
         logger.info("Value in element matches expected value: " + expectedValue);
     }
 
-    protected void checkIsRedirectToExpectedPage(String expectedUrl) {
-        String currentUrl = webDriver.getCurrentUrl();
-        Assert.assertEquals("URL does not match expected URL", expectedUrl, currentUrl);
-        logger.info("Redirected to expected page: " + expectedUrl);
-    }
-
     protected boolean isActiveElement(WebElement element) {
         try {
             boolean state = element.getAttribute("class").contains("active");
