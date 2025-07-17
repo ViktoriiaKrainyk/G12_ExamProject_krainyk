@@ -6,14 +6,13 @@ import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.pages.HomePage;
 import org.pages.PageProvider;
 
 import java.util.concurrent.TimeUnit;
 
 public class BaseTest {
     private WebDriver webDriver;
-    private Logger logger = Logger.getLogger(getClass());
+    protected Logger logger = Logger.getLogger(getClass());
     protected PageProvider pageProvider;
 
     @Before

@@ -11,10 +11,10 @@ public class HeaderElement extends CommonActionsWithElements {
     Logger logger = Logger.getLogger(getClass());
 
     @FindBy(xpath = "//div[@id='profile_desktop']//button[contains(@class,'profile')]")
-    private WebElement LoginToAccountButton;
+    private WebElement loginToAccountButton;
 
     @FindBy(xpath = "//a[@id='profile_desktop']//button[contains(@class,'profile')]")
-    private WebElement AccountButton;
+    private WebElement accountButton;
 
     @FindBy(xpath = "//button[@id='favorites']//span[@class='favourite-count']")
     private WebElement favoritesCount;
@@ -28,37 +28,37 @@ public class HeaderElement extends CommonActionsWithElements {
     }
 
     public HeaderElement checkLoginToAccountButtonIsDisplayed() {
-        checkIsElementDisplayed(LoginToAccountButton);
+        checkIsElementDisplayed(loginToAccountButton);
         return this;
     }
 
     public HeaderElement checkLoginToAccountButtonIsNotDisplayed() {
-        checkIsElementNotDisplayed(LoginToAccountButton);
+        checkIsElementNotDisplayed(loginToAccountButton);
         return this;
     }
 
     public HeaderElement checkTextInLoginToAccountButton(String expectedText ) {
-        checkTextInElement(LoginToAccountButton, expectedText);
+        checkTextInElement(loginToAccountButton, expectedText);
         return this;
     }
 
     public HeaderElement clickOnLoginToAccountButton() {
-        clickOnElement(LoginToAccountButton);
+        clickOnElement(loginToAccountButton);
         return this;
     }
 
     public HeaderElement checkAccountButtonIsDisplayed() {
-        checkIsElementDisplayed(AccountButton);
+        checkIsElementDisplayed(accountButton);
         return this;
     }
 
     public HeaderElement checkTextInAccountButton(String expectedText) {
-        checkTextInElement(AccountButton, expectedText);
+        checkTextInElement(accountButton, expectedText);
         return this;
     }
 
     public boolean isAccountButtonForLoggedUser() {
-       return isElementDisplayed(AccountButton);
+       return isElementDisplayed(accountButton);
     }
 
     public HeaderElement checkFavoritesCountIsDisplayed() {
@@ -71,8 +71,16 @@ public class HeaderElement extends CommonActionsWithElements {
         return this;
     }
 
+    public HeaderElement checkLoginSuccess (String accountButtonText) {
+                checkAccountButtonIsDisplayed();
+                checkTextInAccountButton(accountButtonText);
+                checkLoginToAccountButtonIsNotDisplayed();
+                checkFavoritesCountIsDisplayed();;
+        return this;
+    }
+
     public PersonalAccountPage clickOnAccountButton() {
-        clickOnElement(AccountButton);
+        clickOnElement(accountButton);
         logger.info("Click on Account Button");
         return new PersonalAccountPage(webDriver);
     }

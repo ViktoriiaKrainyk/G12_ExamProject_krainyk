@@ -1,14 +1,27 @@
 package org.pages;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.pages.elements.HeaderElement;
 
-import static org.data.TestData.VALID_LOGIN_UI;
-import static org.data.TestData.VALID_PASSWORD_UI;
+import static org.data.TestLoginData.VALID_LOGIN_UI;
+import static org.data.TestLoginData.VALID_PASSWORD_UI;
 
-public class HomePage extends ParentPage{
+public class HomePage extends ParentPage {
     public HomePage(WebDriver webDriver) {
         super(webDriver);
+    }
+
+    @FindBy(xpath = "//div[@id='slider' and @class='banner']")
+    private WebElement mainSaleBanner;
+
+    @FindBy(xpath = "//div[@data-default-name='Товары недели']")
+    private WebElement weeklyProductsSection;
+
+    @Override
+    protected String getRelativeUrl() {
+        return "";
     }
 
     public HomePage openHomePage() {
@@ -26,14 +39,16 @@ public class HomePage extends ParentPage{
         getHeaderElement()
                 .clickOnLoginToAccountButton()
                 .getAuthForm()
-                    .enterTextInInputEmail(VALID_LOGIN_UI)
-                    .enterTextInInputPassword(VALID_PASSWORD_UI)
-                    .clickOnButtonSignIn(this);
+                .enterTextInInputEmail(VALID_LOGIN_UI)
+                .enterTextInInputPassword(VALID_PASSWORD_UI)
+                .clickOnButtonSignIn(this);
         return this;
     }
 
     public HomePage checkIsRedirectToHomePage() {
-        checkIsRedirectToExpectedPage(baseUrl);
+        checkUrl();
+        checkIsElementDisplayed(mainSaleBanner);
+        checkIsElementDisplayed(weeklyProductsSection);
         return this;
     }
 
@@ -44,9 +59,9 @@ public class HomePage extends ParentPage{
         } else {
             getHeaderElement().clickOnLoginToAccountButton()
                     .getAuthForm()
-                        .enterTextInInputEmail(VALID_LOGIN_UI)
-                        .enterTextInInputPassword(VALID_PASSWORD_UI)
-                        .clickOnButtonSignIn(this);
+                    .enterTextInInputEmail(VALID_LOGIN_UI)
+                    .enterTextInInputPassword(VALID_PASSWORD_UI)
+                    .clickOnButtonSignIn(this);
             checkIsRedirectToHomePage();
             logger.info("User was logged in.");
         }
