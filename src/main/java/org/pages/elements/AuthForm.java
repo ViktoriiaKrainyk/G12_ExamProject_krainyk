@@ -36,88 +36,111 @@ public class AuthForm extends CommonActionsWithElements {
     @FindBy(xpath = "//form[@id='form-auth']//div[@class='popup-close close-icon']")
     private WebElement closeAuthFormButton;
 
-    public AuthForm (WebDriver webDriver) {
+    public AuthForm(WebDriver webDriver) {
         super(webDriver);
     }
 
-    public AuthForm checkAuthFormIsDisplayed() {
+    public AuthForm authFormVerification(String formTitle,
+                                         String emailPlaceholder,
+                                         String passwordPlaceholder,
+                                         String signInButtonText,
+                                         String forgotPasswordText,
+                                         String signUpButtonText) {
+        checkAuthFormIsDisplayed();
+        checkAuthFormTitleIsDisplayed();
+        checkTextInAuthFormTitle(formTitle);
+        checkEmailInputIsDisplayed();
+        checkPlaceholderInEmailInput(emailPlaceholder);
+        checkPasswordInputIsDisplayed();
+        checkPlaceholderInPasswordInput(passwordPlaceholder);
+        checkSignInButtonIsDisplayed();
+        checkTextInSignInButton(signInButtonText);
+        checkForgotPasswordButtonIsDisplayed();
+        checkTextInForgotPasswordButton(forgotPasswordText);
+        checkSignUpButtonIsDisplayed();
+        checkTextInSignUpButton(signUpButtonText);
+        checkCloseAuthFormButtonIsDisplayed();
+        return this;
+    }
+
+    private AuthForm checkAuthFormIsDisplayed() {
         new WebDriverWait(webDriver, Duration.ofSeconds(5))
                 .until(ExpectedConditions.elementToBeClickable(authForm));
         logger.info("Auth Form is displayed as expected");
         return this;
     }
 
-    public AuthForm checkAuthFormTitleIsDisplayed() {
+    private AuthForm checkAuthFormTitleIsDisplayed() {
         checkIsElementDisplayed(headerAuthForm);
         return this;
     }
 
-    public AuthForm checkTextInAuthFormTitle(String expectedTitle ) {
+    private AuthForm checkTextInAuthFormTitle(String expectedTitle) {
         checkTextInElement(headerAuthForm, expectedTitle);
         return this;
     }
 
-    public AuthForm checkEmailInputIsDisplayed( ) {
+    private AuthForm checkEmailInputIsDisplayed() {
         checkIsElementDisplayed(inputEmail);
         return this;
     }
 
-    public AuthForm checkPlaceholderInEmailInput(String expectedPlaceholder ) {
+    private AuthForm checkPlaceholderInEmailInput(String expectedPlaceholder) {
         checkPlaceholderInElement(inputEmail, expectedPlaceholder);
         return this;
     }
 
-    public AuthForm checkPasswordInputIsDisplayed( ) {
+    private AuthForm checkPasswordInputIsDisplayed() {
         checkIsElementDisplayed(inputPassword);
         return this;
     }
 
-    public AuthForm checkPlaceholderInPasswordInput(String expectedPlaceholder ) {
+    private AuthForm checkPlaceholderInPasswordInput(String expectedPlaceholder) {
         checkPlaceholderInElement(inputPassword, expectedPlaceholder);
         return this;
     }
 
-    public AuthForm checkSignInButtonIsDisplayed() {
+    private AuthForm checkSignInButtonIsDisplayed() {
         checkIsElementDisplayed(buttonSignIn);
         return this;
     }
 
-    public AuthForm checkTextInSignInButton(String expectedText ) {
+    private AuthForm checkTextInSignInButton(String expectedText) {
         checkTextInElement(buttonSignIn, expectedText);
         return this;
     }
 
-    public AuthForm checkForgotPasswordButtonIsDisplayed() {
+    private AuthForm checkForgotPasswordButtonIsDisplayed() {
         checkIsElementDisplayed(buttonForgotPassword);
         return this;
     }
 
-    public AuthForm checkTextInForgotPasswordButton(String expectedText ) {
+    private AuthForm checkTextInForgotPasswordButton(String expectedText) {
         checkTextInElement(buttonForgotPassword, expectedText);
         return this;
     }
 
-    public AuthForm checkSignUpButtonIsDisplayed() {
+    private AuthForm checkSignUpButtonIsDisplayed() {
         checkIsElementDisplayed(linkSignUp);
         return this;
     }
 
-    public AuthForm checkTextInSignUpButton(String expectedText ) {
+    private AuthForm checkTextInSignUpButton(String expectedText) {
         checkTextInElement(linkSignUp, expectedText);
         return this;
     }
 
-    public AuthForm checkCloseAuthFormButtonIsDisplayed() {
+    private AuthForm checkCloseAuthFormButtonIsDisplayed() {
         checkIsElementDisplayed(closeAuthFormButton);
         return this;
     }
 
-    public AuthForm enterTextInInputEmail(String email ) {
+    public AuthForm enterTextInInputEmail(String email) {
         clearAndEnterTextToElement(inputEmail, email);
         return this;
     }
 
-    public AuthForm enterTextInInputPassword(String password ) {
+    public AuthForm enterTextInInputPassword(String password) {
         clearAndEnterTextToElement(inputPassword, password);
         return this;
     }
