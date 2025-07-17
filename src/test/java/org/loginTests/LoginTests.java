@@ -1,59 +1,38 @@
 package org.loginTests;
 
 import org.baseTest.BaseTest;
-import org.data.TestData;
 import org.junit.Test;
 
+import static org.data.AuthFormFieldsData.*;
+import static org.data.TestLoginData.VALID_LOGIN_UI;
+import static org.data.TestLoginData.VALID_PASSWORD_UI;
+
 public class LoginTests extends BaseTest {
+
     @Test
     public void validLoginTest() {
         pageProvider.getHomePage()
                 .openHomePage()
+                .checkIsRedirectToHomePage()
                 .getHeaderElement()
-                    .checkLoginToAccountButtonIsDisplayed()
-                    .checkTextInLoginToAccountButton("Вхід до кабінету")
-                    .checkFavoritesCountIsNotDisplayed()
-                    .clickOnLoginToAccountButton();
+                .checkLoginToAccountButtonIsDisplayed()
+                .checkTextInLoginToAccountButton(LOGIN_TO_ACCOUNT_BUTTON_TEXT)
 
-        authFormVerification();
-        enterValidLoginData();
-        checkLoginSuccess();
-    }
-
-    private void authFormVerification(){
-        pageProvider.getHomePage().getHeaderElement().getAuthForm()
-                .checkAuthFormIsDisplayed()
-                .checkAuthFormTitleIsDisplayed()
-                .checkTextInAuthFormTitle("вхід до особистого кабінету")
-                .checkEmailInputIsDisplayed()
-                .checkPlaceholderInEmailInput("E-mail")
-                .checkPasswordInputIsDisplayed()
-                .checkPlaceholderInPasswordInput("Пароль")
-                .checkSignInButtonIsDisplayed()
-                .checkTextInSignInButton("Увійти")
-                .checkForgotPasswordButtonIsDisplayed()
-                .checkTextInForgotPasswordButton("Забули пароль?")
-                .checkSignUpButtonIsDisplayed()
-                .checkTextInSignUpButton("Реєстрація")
-                .checkCloseAuthFormButtonIsDisplayed();
-    }
-
-    private void enterValidLoginData() {
-        pageProvider.getHomePage().getHeaderElement().getAuthForm()
-                .enterTextInInputEmail(TestData.VALID_LOGIN_UI)
-                .enterTextInInputPassword(TestData.VALID_PASSWORD_UI)
+                .checkFavoritesCountIsNotDisplayed()
+                .clickOnLoginToAccountButton()
+                .getAuthForm()
+                .authFormVerification(
+                        AUTH_FORM_TITLE,
+                        EMAIL_PLACEHOLDER,
+                        PASSWORD_PLACEHOLDER,
+                        SIGN_IN_BUTTON_TEXT,
+                        FORGOT_PASSWORD_BUTTON_TEXT,
+                        SIGN_UP_BUTTON_TEXT)
+                .enterTextInInputEmail(VALID_LOGIN_UI)
+                .enterTextInInputPassword(VALID_PASSWORD_UI)
                 .clickOnButtonSignIn(pageProvider.getHomePage());
+        pageProvider.getHomePage().checkIsRedirectToHomePage()
+                .getHeaderElement()
+                .checkLoginSuccess(ACCOUNT_BUTTON_TEXT);
     }
-
-    private void checkLoginSuccess() {
-        pageProvider.getHomePage().getHeaderElement()
-                .checkAccountButtonIsDisplayed()
-                .checkTextInAccountButton("Кабінет")
-                .checkLoginToAccountButtonIsNotDisplayed()
-                .checkFavoritesCountIsDisplayed()
-                .clickOnAccountButton();
-        pageProvider.getPersonalAccountPage().checkIsRedirectToPersonalAccountPage();
-    }
-
-
 }
