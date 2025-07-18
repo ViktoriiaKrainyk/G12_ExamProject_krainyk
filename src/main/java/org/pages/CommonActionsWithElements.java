@@ -124,10 +124,10 @@ public class CommonActionsWithElements {
         }
     }
 
-    protected void waitForElementToBeClickable(WebElement webElement, int timeoutInSeconds) {
+    protected void waitForElementToBeVisable(WebElement webElement, int timeoutInSeconds) {
         try {
             new WebDriverWait(webDriver, Duration.ofSeconds(timeoutInSeconds))
-                    .until(ExpectedConditions.elementToBeClickable(webElement));
+                    .until(ExpectedConditions.visibilityOf(webElement));
             logger.info("Element is clickable");
         } catch (Exception e) {
             printErrorAndStopTest(e);

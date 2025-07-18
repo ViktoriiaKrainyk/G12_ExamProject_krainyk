@@ -4,11 +4,7 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.pages.CommonActionsWithElements;
-
-import java.time.Duration;
 
 public class AuthForm extends CommonActionsWithElements {
     Logger logger = Logger.getLogger(getClass());
@@ -64,7 +60,7 @@ public class AuthForm extends CommonActionsWithElements {
     }
 
     private AuthForm checkAuthFormIsDisplayed() {
-        waitForElementToBeClickable(authForm, 2);
+        waitForElementToBeVisable(authForm, 2);
         checkIsElementDisplayed(authForm);
         logger.info("Auth Form is displayed as expected");
         return this;
