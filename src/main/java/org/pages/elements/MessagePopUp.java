@@ -31,8 +31,7 @@ public class MessagePopUp extends CommonActionsWithElements {
     }
 
     public MessagePopUp checkMessagePopUpIsDisplayed() {
-        new WebDriverWait(webDriver, Duration.ofSeconds(5))
-                .until(ExpectedConditions.elementToBeClickable(messagePopUp));
+        waitForElementToBeClickable(messagePopUp, 2);
         checkIsElementDisplayed(messagePopUp);
         logger.info("Message pop-up is displayed as expected");
         return this;
@@ -47,8 +46,7 @@ public class MessagePopUp extends CommonActionsWithElements {
 
     public PersonalAccountPage closeMessagePopUp() {
         clickOnElement(closePopUpButton);
-        new WebDriverWait(webDriver, Duration.ofSeconds(5))
-                .until(ExpectedConditions.invisibilityOf(messagePopUp));
+        waitForElementToBeInvisible(messagePopUp, 2);
         checkIsElementNotDisplayed(messagePopUp);
         logger.info("Message pop-up closed successfully");
         return new PersonalAccountPage(webDriver);

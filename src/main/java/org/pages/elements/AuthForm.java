@@ -64,8 +64,8 @@ public class AuthForm extends CommonActionsWithElements {
     }
 
     private AuthForm checkAuthFormIsDisplayed() {
-        new WebDriverWait(webDriver, Duration.ofSeconds(5))
-                .until(ExpectedConditions.elementToBeClickable(authForm));
+        waitForElementToBeClickable(authForm, 2);
+        checkIsElementDisplayed(authForm);
         logger.info("Auth Form is displayed as expected");
         return this;
     }
