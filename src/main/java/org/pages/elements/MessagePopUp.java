@@ -28,9 +28,8 @@ public class MessagePopUp extends CommonActionsWithElements {
     }
 
     public MessagePopUp checkMessagePopUpIsDisplayed() {
-        webDriverWait5.until(ExpectedConditions.visibilityOf(messagePopUp));
-        checkIsElementDisplayed(messagePopUp);
-        logger.info("Message pop-up is displayed as expected");
+        webDriverWait15.until(ExpectedConditions.elementToBeClickable(messagePopUp));
+        checkIsElementDisplayed(messagePopUp, "Message popUp");
         return this;
     }
 
@@ -42,10 +41,10 @@ public class MessagePopUp extends CommonActionsWithElements {
     }
 
     public PersonalAccountPage closeMessagePopUp() {
-        clickOnElement(closePopUpButton);
-        webDriverWait5.until(ExpectedConditions.invisibilityOf(messagePopUp));
-        checkIsElementNotDisplayed(messagePopUp);
-        logger.info("Message pop-up closed successfully");
+        clickOnElement(closePopUpButton, "Close popUp button");
+        webDriverWait15.until(ExpectedConditions.invisibilityOf(messagePopUp));
+        checkIsElementNotDisplayed(messagePopUp, "Message popUp");
+        logger.info("PopUp closed successfully");
         return new PersonalAccountPage(webDriver);
     }
 }

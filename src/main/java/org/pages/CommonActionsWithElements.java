@@ -16,20 +16,22 @@ import java.util.NoSuchElementException;
 public class CommonActionsWithElements {
     protected WebDriver webDriver;
     private Logger logger = Logger.getLogger(getClass());
-    protected WebDriverWait webDriverWait5, webDriverWait10;
+    protected WebDriverWait webDriverWait5, webDriverWait10, webDriverWait15;
 
     public CommonActionsWithElements(WebDriver webDriver) {
         this.webDriver = webDriver;
         PageFactory.initElements(webDriver, this); // Initialize the elements described in this class in FindBy annotations
-        webDriverWait5 = new WebDriverWait(webDriver, Duration.ofSeconds(5));
+        webDriverWait5 =  new WebDriverWait(webDriver, Duration.ofSeconds(5));
         webDriverWait10 = new WebDriverWait(webDriver, Duration.ofSeconds(10));
+        webDriverWait15 = new WebDriverWait(webDriver, Duration.ofSeconds(15));
+
     }
 
     protected void clearAndEnterTextToElement(WebElement webElement, String text) {
         try {
             webElement.clear();
             webElement.sendKeys(text);
-            logger.info(text + " was entered in element");
+            logger.info(text + " was entered in element '" + getElementName(webElement) + "'");
         } catch (Exception e) {
             printErrorAndStopTest(e);
         }
@@ -37,11 +39,24 @@ public class CommonActionsWithElements {
 
     protected void clickOnElement(WebElement webElement) {
         try {
-            webDriverWait5
+            webDriverWait10
                     .withMessage("Element is not clickable: " + webElement)
-                    .until(ExpectedConditions.elementToBeClickable(webElement))
-                    .click();
-            logger.info("Element was clicked");
+                    .until(ExpectedConditions.elementToBeClickable(webElement));
+            String elementName = getElementName(webElement);
+            webElement.click();
+            logger.info(elementName + " element was clicked");
+        } catch (Exception e) {
+            printErrorAndStopTest(e);
+        }
+    }
+
+    protected void clickOnElement(WebElement webElement, String elementName) {
+        try {
+            webDriverWait10
+                    .withMessage("Element is not clickable: " + webElement)
+                    .until(ExpectedConditions.elementToBeClickable(webElement));
+            webElement.click();
+            logger.info(elementName + " element was clicked");
         } catch (Exception e) {
             printErrorAndStopTest(e);
         }
@@ -51,9 +66,24 @@ public class CommonActionsWithElements {
         try {
             boolean state = webElement.isDisplayed();
             if (state) {
-                logger.info("Element is displayed");
+                logger.info("Element is displayed: " + getElementName(webElement));
             } else {
-                logger.info("Element is not displayed");
+                logger.info("Element is not displayed: " + getElementName(webElement));
+            }
+            return state;
+        } catch (Exception e) {
+            logger.info("Element is not found, so it is not displayed");
+            return false;
+        }
+    }
+
+    protected boolean isElementDisplayed(WebElement webElement, String elementName) {
+        try {
+            boolean state = webElement.isDisplayed();
+            if (state) {
+                logger.info("Element is displayed: " + elementName);
+            } else {
+                logger.info("Element is not displayed: " + elementName);
             }
             return state;
         } catch (Exception e) {
@@ -67,8 +97,18 @@ public class CommonActionsWithElements {
         logger.info("Element is displayed as expected");
     }
 
+    protected void checkIsElementDisplayed(WebElement webElement, String elementName) {
+        Assert.assertTrue("Element is not displayed", isElementDisplayed(webElement, elementName));
+        logger.info("Element is displayed as expected");
+    }
+
     protected void checkIsElementNotDisplayed(WebElement webElement) {
         Assert.assertFalse("Element is displayed, but it should not be", isElementDisplayed(webElement));
+        logger.info("Element is not displayed as expected");
+    }
+
+    protected void checkIsElementNotDisplayed(WebElement webElement, String elementname) {
+        Assert.assertFalse("Element is displayed, but it should not be", isElementDisplayed(webElement, elementname));
         logger.info("Element is not displayed as expected");
     }
 
@@ -80,14 +120,14 @@ public class CommonActionsWithElements {
 
     protected void checkPlaceholderInElement(WebElement webElement, String expectedText) {
         String actualText = webElement.getAttribute("placeholder");
-        Assert.assertEquals("Text in placeholder does not match expected text", expectedText, actualText);
-        logger.info("Text in placeholder matches expected text: " + expectedText);
+        Assert.assertEquals("Text in element does not match expected text", expectedText, actualText);
+        logger.info("Text in element matches expected text: " + expectedText);
     }
 
     protected String getValueFromElement(WebElement webElement) {
         try {
             String value = webElement.getAttribute("value");
-            logger.info("Value from element = " + value);
+            logger.info("Value from element '" + getElementName(webElement) + "' is " + value);
             return value != null ? value : "";
         } catch (Exception e) {
             printErrorAndStopTest(e);
@@ -95,24 +135,39 @@ public class CommonActionsWithElements {
         }
     }
 
-    protected void selectValueFromTheList(String dropdownXpath, String logName, int value) {
+    protected void selectValueFromTheList(String elementXpath, WebElement webElement, int value) {
         try {
-            List<WebElement> options = webDriver.findElements(By.xpath(dropdownXpath));
+            List<WebElement> options = webDriver.findElements(By.xpath(elementXpath));
             if (options.isEmpty()) {
-                String message = "Value '" + value + "' did not found " + logName + " dropdown!";
+                String message = "Value '" + value + "' is not found in the element '" + getElementName(webElement) + "'" ;
                 logger.error(message);
                 throw new NoSuchElementException(message);
             }
             options.get(0).click();
-            logger.info("Value '" + value + "' was selected in " + logName + " dropdown");
+            logger.info("Value '" + value + "' was selected in the element '" + getElementName(webElement) + "'");
+        } catch (Exception e) {
+            printErrorAndStopTest(e);
+        }
+    }
+
+    protected void selectValueFromTheList(String elementXpath, String element, int value) {
+        try {
+            List<WebElement> options = webDriver.findElements(By.xpath(elementXpath));
+            if (options.isEmpty()) {
+                String message = "Value '" + value + "' is not found in the element '" + element + "'" ;
+                logger.error(message);
+                throw new NoSuchElementException(message);
+            }
+            options.get(0).click();
+            logger.info("Value '" + value + "' was selected in the element '" + element + "'");
         } catch (Exception e) {
             printErrorAndStopTest(e);
         }
     }
 
     protected void checkValueInElement(WebElement webElement, String expectedValue) {
-        Assert.assertEquals("Value in element does not match expected value", expectedValue, getValueFromElement(webElement));
-        logger.info("Value in element matches expected value: " + expectedValue);
+        Assert.assertEquals("Value in element '" + getElementName(webElement) + "' does not match expected value", expectedValue, getValueFromElement(webElement));
+        logger.info("Value in element '" + getElementName(webElement) + "' matches expected value: " + expectedValue);
     }
 
     protected boolean isActiveElement(WebElement element) {
@@ -127,6 +182,29 @@ public class CommonActionsWithElements {
         } catch (Exception e) {
             logger.info("Error while checking if tab is active: " + e.getMessage());
             return false;
+        }
+    }
+
+    protected boolean isActiveElement(WebElement element, String elementName) {
+        try {
+            boolean state = element.getAttribute("class").contains("active");
+            if (state) {
+                logger.info("Element is active: " + elementName);
+            } else {
+                logger.info("Element is not active: " + elementName);
+            }
+            return state;
+        } catch (Exception e) {
+            logger.info("Error while checking if tab is active: " + e.getMessage());
+            return false;
+        }
+    }
+
+    private String getElementName(WebElement webElement) {
+        try {
+            return webElement.getAccessibleName();
+        } catch (Exception e) {
+            return "";
         }
     }
 

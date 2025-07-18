@@ -62,7 +62,7 @@ public class HeaderElement extends CommonActionsWithElements {
     }
 
     public HeaderElement checkFavoritesCountIsDisplayed() {
-        checkIsElementDisplayed(favoritesCount);
+        checkIsElementDisplayed(favoritesCount, "Favorite count");
         return this;
     }
 

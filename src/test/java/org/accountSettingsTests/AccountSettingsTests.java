@@ -29,6 +29,7 @@ public class AccountSettingsTests extends BaseTest {
 
     @After
     public void resetContactInfo() {
+        logger.info("Post condition - reset contact info to previous state");
         pageProvider.getHomePage()
                 .openLoginPopUpAndFillLoginFormIfNeeded()
                 .getHeaderElement().clickOnAccountButton()

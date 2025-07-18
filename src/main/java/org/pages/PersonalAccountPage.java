@@ -81,13 +81,13 @@ public class PersonalAccountPage extends ParentPage {
     }
 
     public PersonalAccountPage checkIsExitButtonIsDisplayed() {
-        checkIsElementDisplayed(exitButton);
+        checkIsElementDisplayed(exitButton, "Exit button");
         return this;
     }
 
     public PersonalAccountPage checkIsContactInfoTabIsActive() {
         checkOnlyOneTabIsActive();
-        checkIsTabActive(contactInfoTab);
+        checkIsTabActive(contactInfoTab, "Contact info tab");
         return this;
     }
 
@@ -135,9 +135,9 @@ public class PersonalAccountPage extends ParentPage {
     private PersonalAccountPage setBirthdayValue(int date, int month, int year) {
         clickOnElement(inputBirthday);
         checkIsCalendarDisplayed();
-        clickOnElement(yearList);
+        clickOnElement(yearList, "Year list");
         selectValueInYearDropdown(year);
-        clickOnElement(monthList);
+        clickOnElement(monthList, "Month list");
         selectValueInMonthDropdown(month);
         selectValueFromTheListOfDate(date);
         logger.info(String.format("Birthday value set to: %s.%s.%s", date, month, year));
@@ -146,14 +146,14 @@ public class PersonalAccountPage extends ParentPage {
 
     private PersonalAccountPage selectValueInYearDropdown(int year) {
         String yearXpath = "//span[@class='down-year']//div[@data-value='" + year + "']";
-        selectValueFromTheList(yearXpath, yearList, year);
+        selectValueFromTheList(yearXpath, "Year List", year);
         return this;
     }
 
     private PersonalAccountPage selectValueInMonthDropdown(int value) {
         int month = value - 1;
         String monthXpath = "//span[@class='down-month']//div[@data-value='" + month + "']";
-        selectValueFromTheList(monthXpath, monthList, month);
+        selectValueFromTheList(monthXpath, "Month List", month);
         return this;
     }
 
@@ -164,26 +164,22 @@ public class PersonalAccountPage extends ParentPage {
     }
 
     private PersonalAccountPage checkIsCalendarDisplayed() {
-        checkIsElementDisplayed(calendar);
-        logger.info("Calendar is displayed as expected");
+        checkIsElementDisplayed(calendar, "Calendar");
         return this;
     }
 
     private PersonalAccountPage checkIsCalendarNotDisplayed() {
-        checkIsElementNotDisplayed(calendar);
-        logger.info("Calendar is not displayed as expected");
+        checkIsElementNotDisplayed(calendar, "Calendar");
         return this;
     }
 
     private PersonalAccountPage enterTextIntoInputName(String text) {
         clearAndEnterTextToElement(inputName, text);
-        logger.info("Entered text into input name: " + text);
         return this;
     }
 
     private PersonalAccountPage enterTextIntoInputSurname(String text) {
         clearAndEnterTextToElement(inputSurname, text);
-        logger.info("Entered text into input surname: " + text);
         return this;
     }
 
@@ -206,9 +202,9 @@ public class PersonalAccountPage extends ParentPage {
                 By.xpath("//ul[@class='private-office__tabs']//li"));
     }
 
-    private void checkIsTabActive(WebElement tab) {
-        Assert.assertTrue(tab + " is not active, but it should be", isActiveElement(tab));
-        logger.info(tab + " is active as expected");
+    private void checkIsTabActive(WebElement tab, String elementName) {
+        Assert.assertTrue("Tab is not active, but it should be", isActiveElement(tab, elementName));
+        logger.info("Tab is active as expected");
     }
 
     private PersonalAccountPage checkOnlyOneTabIsActive() {

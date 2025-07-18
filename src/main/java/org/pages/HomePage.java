@@ -3,6 +3,7 @@ package org.pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.pages.elements.HeaderElement;
 
 import static org.data.TestLoginData.VALID_LOGIN_UI;
@@ -47,8 +48,10 @@ public class HomePage extends ParentPage {
 
     public HomePage checkIsRedirectToHomePage() {
         checkUrl();
-        checkIsElementDisplayed(mainSaleBanner);
-        checkIsElementDisplayed(weeklyProductsSection);
+        webDriverWait10.until(ExpectedConditions.visibilityOf(mainSaleBanner));
+        checkIsElementDisplayed(mainSaleBanner, "Sale Banner");
+        webDriverWait15.until(ExpectedConditions.visibilityOf(weeklyProductsSection));
+        checkIsElementDisplayed(weeklyProductsSection, "Weekly Product section");
         logger.info("The HomePage is opened");
         return this;
     }

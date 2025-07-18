@@ -62,14 +62,13 @@ public class AuthForm extends CommonActionsWithElements {
 
     private AuthForm checkAuthFormIsDisplayed() {
         webDriverWait10.until(ExpectedConditions.visibilityOf(authForm));
-        logger.info("AuthForm is displayed as expected");
+        checkIsElementDisplayed(authForm, "Autorization form");
         return this;
     }
 
     public AuthForm checkAuthFormIsNotDisplayed() {
         webDriverWait10.until(ExpectedConditions.invisibilityOf(authForm));
         checkIsElementNotDisplayed(authForm);
-        logger.info("AuthForm is not displayed as expected");
         return this;
     }
 
@@ -114,7 +113,7 @@ public class AuthForm extends CommonActionsWithElements {
     }
 
     private AuthForm checkForgotPasswordButtonIsDisplayed() {
-        checkIsElementDisplayed(buttonForgotPassword);
+        checkIsElementDisplayed(buttonForgotPassword, "Forgot Password");
         return this;
     }
 
@@ -134,7 +133,7 @@ public class AuthForm extends CommonActionsWithElements {
     }
 
     private AuthForm checkCloseAuthFormButtonIsDisplayed() {
-        checkIsElementDisplayed(closeAuthFormButton);
+        checkIsElementDisplayed(closeAuthFormButton, "Cross icon");
         return this;
     }
 
