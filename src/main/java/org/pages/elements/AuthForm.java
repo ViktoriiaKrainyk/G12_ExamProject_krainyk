@@ -5,10 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.pages.CommonActionsWithElements;
-
-import java.time.Duration;
 
 public class AuthForm extends CommonActionsWithElements {
     Logger logger = Logger.getLogger(getClass());
@@ -64,9 +61,14 @@ public class AuthForm extends CommonActionsWithElements {
     }
 
     private AuthForm checkAuthFormIsDisplayed() {
-        waitForElementToBeClickable(authForm, 2);
-        checkIsElementDisplayed(authForm);
-        logger.info("Auth Form is displayed as expected");
+        webDriverWait10.until(ExpectedConditions.visibilityOf(authForm));
+        checkIsElementDisplayed(authForm, "Autorization form");
+        return this;
+    }
+
+    public AuthForm checkAuthFormIsNotDisplayed() {
+        webDriverWait10.until(ExpectedConditions.invisibilityOf(authForm));
+        checkIsElementNotDisplayed(authForm);
         return this;
     }
 
@@ -111,7 +113,7 @@ public class AuthForm extends CommonActionsWithElements {
     }
 
     private AuthForm checkForgotPasswordButtonIsDisplayed() {
-        checkIsElementDisplayed(buttonForgotPassword);
+        checkIsElementDisplayed(buttonForgotPassword, "Forgot Password");
         return this;
     }
 
@@ -131,7 +133,7 @@ public class AuthForm extends CommonActionsWithElements {
     }
 
     private AuthForm checkCloseAuthFormButtonIsDisplayed() {
-        checkIsElementDisplayed(closeAuthFormButton);
+        checkIsElementDisplayed(closeAuthFormButton, "Cross icon");
         return this;
     }
 
@@ -147,7 +149,6 @@ public class AuthForm extends CommonActionsWithElements {
 
     public <T> T clickOnButtonSignIn(T currentPage) {
         clickOnElement(buttonSignIn);
-        logger.info("Sign In button was clicked");
         return currentPage;
     }
 }

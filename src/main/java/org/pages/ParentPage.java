@@ -3,6 +3,7 @@ package org.pages;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 abstract public class ParentPage extends CommonActionsWithElements {
     protected String baseUrl = "https://parfums.ua/ua";
@@ -15,9 +16,12 @@ abstract public class ParentPage extends CommonActionsWithElements {
     abstract protected String getRelativeUrl();
 
     protected void checkUrl() {
-        Assert.assertEquals("URL is not expected"
-                ,baseUrl + getRelativeUrl()
-                , webDriver.getCurrentUrl()
-        );
+        String expectedPattern = baseUrl + getRelativeUrl();
+        webDriverWait10.until(ExpectedConditions.urlMatches(expectedPattern));
+
+        Assert.assertTrue("URL is not expected\n" +
+                        "Expected url: " + expectedPattern +
+                        "\nActual url: " + webDriver.getCurrentUrl(),
+                webDriver.getCurrentUrl().matches(expectedPattern));
     }
 }

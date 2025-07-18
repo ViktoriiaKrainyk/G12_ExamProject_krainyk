@@ -6,11 +6,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.pages.CommonActionsWithElements;
 import org.pages.PersonalAccountPage;
-
-import java.time.Duration;
 
 public class MessagePopUp extends CommonActionsWithElements {
     Logger logger = Logger.getLogger(getClass());
@@ -31,9 +28,8 @@ public class MessagePopUp extends CommonActionsWithElements {
     }
 
     public MessagePopUp checkMessagePopUpIsDisplayed() {
-        waitForElementToBeClickable(messagePopUp, 2);
-        checkIsElementDisplayed(messagePopUp);
-        logger.info("Message pop-up is displayed as expected");
+        webDriverWait15.until(ExpectedConditions.elementToBeClickable(messagePopUp));
+        checkIsElementDisplayed(messagePopUp, "Message popUp");
         return this;
     }
 
@@ -45,10 +41,10 @@ public class MessagePopUp extends CommonActionsWithElements {
     }
 
     public PersonalAccountPage closeMessagePopUp() {
-        clickOnElement(closePopUpButton);
-        waitForElementToBeInvisible(messagePopUp, 2);
-        checkIsElementNotDisplayed(messagePopUp);
-        logger.info("Message pop-up closed successfully");
+        clickOnElement(closePopUpButton, "Close popUp button");
+        webDriverWait15.until(ExpectedConditions.invisibilityOf(messagePopUp));
+        checkIsElementNotDisplayed(messagePopUp, "Message popUp");
+        logger.info("PopUp closed successfully");
         return new PersonalAccountPage(webDriver);
     }
 }
