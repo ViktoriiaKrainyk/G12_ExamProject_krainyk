@@ -16,10 +16,13 @@ import java.util.NoSuchElementException;
 public class CommonActionsWithElements {
     protected WebDriver webDriver;
     private Logger logger = Logger.getLogger(getClass());
+    protected WebDriverWait webDriverWait5, webDriverWait10;
 
     public CommonActionsWithElements(WebDriver webDriver) {
         this.webDriver = webDriver;
         PageFactory.initElements(webDriver, this); // Initialize the elements described in this class in FindBy annotations
+        webDriverWait5 = new WebDriverWait(webDriver, Duration.ofSeconds(5));
+        webDriverWait10 = new WebDriverWait(webDriver, Duration.ofSeconds(10));
     }
 
     protected void clearAndEnterTextToElement(WebElement webElement, String text) {
@@ -121,26 +124,6 @@ public class CommonActionsWithElements {
         } catch (Exception e) {
             logger.info("Error while checking if tab is active: " + e.getMessage());
             return false;
-        }
-    }
-
-    protected void waitForElementToBeVisable(WebElement webElement, int timeoutInSeconds) {
-        try {
-            new WebDriverWait(webDriver, Duration.ofSeconds(timeoutInSeconds))
-                    .until(ExpectedConditions.visibilityOf(webElement));
-            logger.info("Element is clickable");
-        } catch (Exception e) {
-            printErrorAndStopTest(e);
-        }
-    }
-
-    protected void waitForElementToBeInvisible(WebElement webElement, int timeoutInSeconds) {
-        try {
-            new WebDriverWait(webDriver, Duration.ofSeconds(timeoutInSeconds))
-                    .until(ExpectedConditions.invisibilityOf(webElement));
-            logger.info("Element is invisible");
-        } catch (Exception e) {
-            printErrorAndStopTest(e);
         }
     }
 

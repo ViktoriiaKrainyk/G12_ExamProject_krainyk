@@ -5,6 +5,7 @@ import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.pages.CommonActionsWithElements;
 import org.pages.PersonalAccountPage;
 
@@ -27,7 +28,7 @@ public class MessagePopUp extends CommonActionsWithElements {
     }
 
     public MessagePopUp checkMessagePopUpIsDisplayed() {
-        waitForElementToBeVisable(messagePopUp, 2);
+        webDriverWait5.until(ExpectedConditions.visibilityOf(messagePopUp));
         checkIsElementDisplayed(messagePopUp);
         logger.info("Message pop-up is displayed as expected");
         return this;
@@ -42,7 +43,7 @@ public class MessagePopUp extends CommonActionsWithElements {
 
     public PersonalAccountPage closeMessagePopUp() {
         clickOnElement(closePopUpButton);
-        waitForElementToBeInvisible(messagePopUp, 2);
+        webDriverWait5.until(ExpectedConditions.invisibilityOf(messagePopUp));
         checkIsElementNotDisplayed(messagePopUp);
         logger.info("Message pop-up closed successfully");
         return new PersonalAccountPage(webDriver);

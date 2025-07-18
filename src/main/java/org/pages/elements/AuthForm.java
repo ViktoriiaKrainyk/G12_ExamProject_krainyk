@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.pages.CommonActionsWithElements;
 
 public class AuthForm extends CommonActionsWithElements {
@@ -60,14 +61,13 @@ public class AuthForm extends CommonActionsWithElements {
     }
 
     private AuthForm checkAuthFormIsDisplayed() {
-        waitForElementToBeVisable(authForm, 2);
-        checkIsElementDisplayed(authForm);
+        webDriverWait5.until(ExpectedConditions.visibilityOf(authForm));
         logger.info("Auth Form is displayed as expected");
         return this;
     }
 
     public AuthForm checkAuthFormIsNotDisplayed() {
-        waitForElementToBeInvisible(authForm, 2);
+        webDriverWait5.until(ExpectedConditions.invisibilityOf(authForm));
         checkIsElementNotDisplayed(authForm);
         logger.info("Auth Form is displayed as expected");
         return this;
