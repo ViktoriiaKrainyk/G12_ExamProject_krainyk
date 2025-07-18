@@ -66,6 +66,13 @@ public class AuthForm extends CommonActionsWithElements {
         return this;
     }
 
+    public AuthForm checkAuthFormIsNotDisplayed() {
+        waitForElementToBeInvisible(authForm, 2);
+        checkIsElementNotDisplayed(authForm);
+        logger.info("Auth Form is displayed as expected");
+        return this;
+    }
+
     private AuthForm checkAuthFormTitleIsDisplayed() {
         checkIsElementDisplayed(headerAuthForm);
         return this;

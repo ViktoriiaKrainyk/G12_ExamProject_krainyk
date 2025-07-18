@@ -30,7 +30,9 @@ public class LoginTests extends BaseTest {
                         SIGN_UP_BUTTON_TEXT)
                 .enterTextInInputEmail(VALID_LOGIN_UI)
                 .enterTextInInputPassword(VALID_PASSWORD_UI)
-                .clickOnButtonSignIn(pageProvider.getHomePage());
+                .clickOnButtonSignIn(pageProvider.getHomePage())
+                .getHeaderElement().getAuthForm().checkAuthFormIsNotDisplayed();
+
         pageProvider.getHomePage().checkIsRedirectToHomePage()
                 .getHeaderElement()
                 .checkLoginSuccess(ACCOUNT_BUTTON_TEXT);
