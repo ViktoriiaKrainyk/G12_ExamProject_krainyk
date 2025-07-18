@@ -61,15 +61,15 @@ public class AuthForm extends CommonActionsWithElements {
     }
 
     private AuthForm checkAuthFormIsDisplayed() {
-        webDriverWait5.until(ExpectedConditions.visibilityOf(authForm));
-        logger.info("Auth Form is displayed as expected");
+        webDriverWait10.until(ExpectedConditions.visibilityOf(authForm));
+        logger.info("AuthForm is displayed as expected");
         return this;
     }
 
     public AuthForm checkAuthFormIsNotDisplayed() {
-        webDriverWait5.until(ExpectedConditions.invisibilityOf(authForm));
+        webDriverWait10.until(ExpectedConditions.invisibilityOf(authForm));
         checkIsElementNotDisplayed(authForm);
-        logger.info("Auth Form is displayed as expected");
+        logger.info("AuthForm is not displayed as expected");
         return this;
     }
 
@@ -150,7 +150,6 @@ public class AuthForm extends CommonActionsWithElements {
 
     public <T> T clickOnButtonSignIn(T currentPage) {
         clickOnElement(buttonSignIn);
-        logger.info("Sign In button was clicked");
         return currentPage;
     }
 }

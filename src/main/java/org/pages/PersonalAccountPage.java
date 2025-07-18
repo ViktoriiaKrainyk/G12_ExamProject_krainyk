@@ -36,10 +36,10 @@ public class PersonalAccountPage extends ParentPage {
     private WebElement calendar;
 
     @FindBy(xpath = "//span[@class='down-year']")
-    private WebElement yearDropdown;
+    private WebElement yearList;
 
     @FindBy(xpath = "//span[@class='down-month']")
-    private WebElement monthDropdown;
+    private WebElement monthList;
 
     @FindBy(xpath = "//button[@type='submit' and @class='button']")
     private WebElement saveButton;
@@ -66,7 +66,9 @@ public class PersonalAccountPage extends ParentPage {
 
     public PersonalAccountPage checkIsRedirectToPersonalAccountPage() {
         checkUrl();
-        // TODO check some unique element on the home page
+        checkTabsNames();
+        checkIsExitButtonIsDisplayed();
+        logger.info("The AccountPage is opened");
         return this;
     }
 
@@ -133,9 +135,9 @@ public class PersonalAccountPage extends ParentPage {
     private PersonalAccountPage setBirthdayValue(int date, int month, int year) {
         clickOnElement(inputBirthday);
         checkIsCalendarDisplayed();
-        clickOnElement(yearDropdown);
+        clickOnElement(yearList);
         selectValueInYearDropdown(year);
-        clickOnElement(monthDropdown);
+        clickOnElement(monthList);
         selectValueInMonthDropdown(month);
         selectValueFromTheListOfDate(date);
         logger.info(String.format("Birthday value set to: %s.%s.%s", date, month, year));
@@ -144,20 +146,20 @@ public class PersonalAccountPage extends ParentPage {
 
     private PersonalAccountPage selectValueInYearDropdown(int year) {
         String yearXpath = "//span[@class='down-year']//div[@data-value='" + year + "']";
-        selectValueFromTheList(yearXpath, "year", year);
+        selectValueFromTheList(yearXpath, yearList, year);
         return this;
     }
 
     private PersonalAccountPage selectValueInMonthDropdown(int value) {
         int month = value - 1;
         String monthXpath = "//span[@class='down-month']//div[@data-value='" + month + "']";
-        selectValueFromTheList(monthXpath, "month", month);
+        selectValueFromTheList(monthXpath, monthList, month);
         return this;
     }
 
     private PersonalAccountPage selectValueFromTheListOfDate(int date) {
         String dateXpath = "//table//td/span[@class='day' and text()='" + date + "']";
-        selectValueFromTheList(dateXpath, "date", date);
+        selectValueFromTheList(dateXpath, inputBirthday, date);
         return this;
     }
 
@@ -205,8 +207,8 @@ public class PersonalAccountPage extends ParentPage {
     }
 
     private void checkIsTabActive(WebElement tab) {
-        Assert.assertTrue(getElementName(tab) + " is not active, but it should be", isActiveElement(tab));
-        logger.info(getElementName(tab) + " is active as expected");
+        Assert.assertTrue(tab + " is not active, but it should be", isActiveElement(tab));
+        logger.info(tab + " is active as expected");
     }
 
     private PersonalAccountPage checkOnlyOneTabIsActive() {
@@ -218,18 +220,6 @@ public class PersonalAccountPage extends ParentPage {
         Assert.assertEquals("Number of active tabs is not as expected", 1, activeTabsCount);
         logger.info("Number of active tabs: " + activeTabsCount);
         return this;
-    }
-
-    private String getElementName(WebElement webElement) {
-        String elementName;
-        try {
-            elementName = webElement.getText();
-            logger.info("Element name: " + elementName);
-        } catch (Exception e) {
-            elementName = "Element";
-            logger.info("Element name is not found, using \"Element\" name instead");
-        }
-        return elementName;
     }
 
     private String formatBirthday(int day, int month, int year) {

@@ -49,6 +49,7 @@ public class HomePage extends ParentPage {
         checkUrl();
         checkIsElementDisplayed(mainSaleBanner);
         checkIsElementDisplayed(weeklyProductsSection);
+        logger.info("The HomePage is opened");
         return this;
     }
 

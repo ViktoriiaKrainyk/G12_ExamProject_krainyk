@@ -21,8 +21,6 @@ public class AccountSettingsTests extends BaseTest {
                 .checkIsRedirectToHomePage()
                 .getHeaderElement().clickOnAccountButton()
                 .checkIsRedirectToPersonalAccountPage()
-                .checkTabsNames()
-                .checkIsExitButtonIsDisplayed()
                 .checkIsContactInfoTabIsActive()
                 .checkUserContactInfo(INITIAL_USER.name, INITIAL_USER.surname, INITIAL_USER.dayOfBirth, INITIAL_USER.monthOfBirth, INITIAL_USER.yearOfBirth, VALID_LOGIN_UI)
                 .updateUserContactInfo(UPDATED_USER.name, UPDATED_USER.surname, UPDATED_USER.dayOfBirth,UPDATED_USER.monthOfBirth, UPDATED_USER.yearOfBirth, DATASUCCESSFULLYSAVEDMESSAGE)
