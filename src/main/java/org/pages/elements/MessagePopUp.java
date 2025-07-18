@@ -28,7 +28,7 @@ public class MessagePopUp extends CommonActionsWithElements {
     }
 
     public MessagePopUp checkMessagePopUpIsDisplayed() {
-        webDriverWait15.until(ExpectedConditions.elementToBeClickable(messagePopUp));
+        webDriverWait20.until(ExpectedConditions.elementToBeClickable(messagePopUp));
         checkIsElementDisplayed(messagePopUp, "Message popUp");
         return this;
     }

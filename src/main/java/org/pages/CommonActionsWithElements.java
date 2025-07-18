@@ -16,7 +16,7 @@ import java.util.NoSuchElementException;
 public class CommonActionsWithElements {
     protected WebDriver webDriver;
     private Logger logger = Logger.getLogger(getClass());
-    protected WebDriverWait webDriverWait5, webDriverWait10, webDriverWait15;
+    protected WebDriverWait webDriverWait5, webDriverWait10, webDriverWait15, webDriverWait20;
 
     public CommonActionsWithElements(WebDriver webDriver) {
         this.webDriver = webDriver;
@@ -24,7 +24,7 @@ public class CommonActionsWithElements {
         webDriverWait5 =  new WebDriverWait(webDriver, Duration.ofSeconds(5));
         webDriverWait10 = new WebDriverWait(webDriver, Duration.ofSeconds(10));
         webDriverWait15 = new WebDriverWait(webDriver, Duration.ofSeconds(15));
-
+        webDriverWait20 = new WebDriverWait(webDriver, Duration.ofSeconds(15));
     }
 
     protected void clearAndEnterTextToElement(WebElement webElement, String text) {
