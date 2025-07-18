@@ -6,7 +6,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -118,6 +121,26 @@ public class CommonActionsWithElements {
         } catch (Exception e) {
             logger.info("Error while checking if tab is active: " + e.getMessage());
             return false;
+        }
+    }
+
+    protected void waitForElementToBeClickable(WebElement webElement, int timeoutInSeconds) {
+        try {
+            new WebDriverWait(webDriver, Duration.ofSeconds(timeoutInSeconds))
+                    .until(ExpectedConditions.elementToBeClickable(webElement));
+            logger.info("Element is clickable");
+        } catch (Exception e) {
+            printErrorAndStopTest(e);
+        }
+    }
+
+    protected void waitForElementToBeInvisible(WebElement webElement, int timeoutInSeconds) {
+        try {
+            new WebDriverWait(webDriver, Duration.ofSeconds(timeoutInSeconds))
+                    .until(ExpectedConditions.invisibilityOf(webElement));
+            logger.info("Element is invisible");
+        } catch (Exception e) {
+            printErrorAndStopTest(e);
         }
     }
 
