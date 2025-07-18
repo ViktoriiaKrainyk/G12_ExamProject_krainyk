@@ -37,7 +37,10 @@ public class CommonActionsWithElements {
 
     protected void clickOnElement(WebElement webElement) {
         try {
-            webElement.click();
+            webDriverWait5
+                    .withMessage("Element is not clickable: " + webElement)
+                    .until(ExpectedConditions.elementToBeClickable(webElement))
+                    .click();
             logger.info("Element was clicked");
         } catch (Exception e) {
             printErrorAndStopTest(e);
