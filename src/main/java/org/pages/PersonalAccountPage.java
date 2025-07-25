@@ -8,7 +8,6 @@ import org.openqa.selenium.support.FindBy;
 import org.pages.elements.HeaderElement;
 import org.pages.elements.MessagePopUp;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -116,7 +115,7 @@ public class PersonalAccountPage extends ParentPage {
         return this;
     }
 
-    public HomePage updateUserContactInfoIfNeeded(String name, String surname, int dayOfBirth, int monthOfBirth, int yearOfBirth, String dataSucessfullySavedMessage) throws InterruptedException {
+    public HomePage updateUserContactInfoIfNeeded(String name, String surname, int dayOfBirth, int monthOfBirth, int yearOfBirth, String dataSucessfullySavedMessage) {
         List<Runnable> updateActions = new ArrayList<>();
 
         // Перевірка імені
@@ -268,10 +267,9 @@ public class PersonalAccountPage extends ParentPage {
         return String.format("%02d.%02d.%d", day, month, year);
     }
 
-    private HomePage clickOnExitButton() throws InterruptedException {
+    private HomePage clickOnExitButton() {
         clickOnElement(exitButton, "Exit button");
         logger.info("Exit button was clicked");
-        Thread.sleep(3000); // Затримка для стабільності тесту
         return new HomePage(webDriver);
     }
 }

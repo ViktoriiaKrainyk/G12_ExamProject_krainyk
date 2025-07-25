@@ -15,7 +15,7 @@ public class AccountSettingsTests extends BaseTest {
     final String DATASUCCESSFULLYSAVEDMESSAGE = "Відмінно! Данні успішно збережені";
 
     @Before
-    public void checkContactInfoAndUpdateIfNeeded() throws InterruptedException {
+    public void checkContactInfoAndUpdateIfNeeded() {
         logger.info("Pre condition - reset contact info to default state");
         pageProvider.getHomePage()
                 .openLoginPopUpAndFillLoginFormIfNeeded()
