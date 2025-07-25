@@ -8,10 +8,14 @@ import org.openqa.selenium.support.FindBy;
 import org.pages.elements.HeaderElement;
 import org.pages.elements.MessagePopUp;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+
+import static org.apache.commons.io.FilenameUtils.equalsNormalized;
 
 public class PersonalAccountPage extends ParentPage {
     @FindBy(xpath = "//li[@data-tab='contact-info']")
@@ -44,7 +48,7 @@ public class PersonalAccountPage extends ParentPage {
     @FindBy(xpath = "//button[@type='submit' and @class='button']")
     private WebElement saveButton;
 
-    @FindBy (xpath = "//li[contains(@class,'exit')]")
+    @FindBy (xpath = "//a[@href='/ua/user/logout/']")
     private WebElement exitButton;
 
     public PersonalAccountPage(WebDriver webDriver) {
@@ -110,6 +114,48 @@ public class PersonalAccountPage extends ParentPage {
                 .checkMessageTextInMessagePopUp(dataSucessfullySavedMessage)
                 .closeMessagePopUp();
         return this;
+    }
+
+    public HomePage updateUserContactInfoIfNeeded(String name, String surname, int dayOfBirth, int monthOfBirth, int yearOfBirth, String dataSucessfullySavedMessage) throws InterruptedException {
+        List<Runnable> updateActions = new ArrayList<>();
+
+        // Перевірка імені
+        if (!equalsNormalized(getValueFromElement(inputName), name)) {
+            updateActions.add(() -> enterTextIntoInputName(name));
+        }
+
+        // Перевірка прізвища
+        if (!equalsNormalized(getValueFromElement(inputSurname), surname)) {
+            updateActions.add(() -> enterTextIntoInputSurname(surname));
+        }
+
+        // Перевірка дати народження
+        String currentBirthDate = getValueFromElement(inputBirthday); // метод, що повертає дату народження з форми
+        String expectedBirthDate = formatBirthday(dayOfBirth, monthOfBirth, yearOfBirth);
+        if (!Objects.equals(currentBirthDate, expectedBirthDate)) {
+            updateActions.add(() -> {
+                checkIsCalendarNotDisplayed();
+                setBirthdayValue(dayOfBirth, monthOfBirth, yearOfBirth);
+            });
+        }
+
+        // Якщо були зміни — виконуємо апдейт
+        if (!updateActions.isEmpty()) {
+            updateActions.forEach(Runnable::run);
+            clickOnSaveButton();
+            getMessagePopUp()
+                    .checkMessagePopUpIsDisplayed()
+                    .checkMessageTextInMessagePopUp(dataSucessfullySavedMessage)
+                    .closeMessagePopUp();
+            clickOnExitButton();
+            logger.info("User was log out with updated data.");
+
+        } else {
+            logger.info("No updates needed – all fields match.");
+            clickOnExitButton();
+            logger.info("User was log out without changes.");
+        }
+        return new HomePage(webDriver);
     }
 
     private PersonalAccountPage checkValueInInputName(String expectedValue) {
@@ -222,4 +268,10 @@ public class PersonalAccountPage extends ParentPage {
         return String.format("%02d.%02d.%d", day, month, year);
     }
 
+    private HomePage clickOnExitButton() throws InterruptedException {
+        clickOnElement(exitButton, "Exit button");
+        logger.info("Exit button was clicked");
+        Thread.sleep(3000); // Затримка для стабільності тесту
+        return new HomePage(webDriver);
+    }
 }
