@@ -118,18 +118,15 @@ public class PersonalAccountPage extends ParentPage {
     public HomePage updateUserContactInfoIfNeeded(String name, String surname, int dayOfBirth, int monthOfBirth, int yearOfBirth, String dataSucessfullySavedMessage) {
         List<Runnable> updateActions = new ArrayList<>();
 
-        // Перевірка імені
         if (!equalsNormalized(getValueFromElement(inputName), name)) {
             updateActions.add(() -> enterTextIntoInputName(name));
         }
 
-        // Перевірка прізвища
         if (!equalsNormalized(getValueFromElement(inputSurname), surname)) {
             updateActions.add(() -> enterTextIntoInputSurname(surname));
         }
 
-        // Перевірка дати народження
-        String currentBirthDate = getValueFromElement(inputBirthday); // метод, що повертає дату народження з форми
+        String currentBirthDate = getValueFromElement(inputBirthday);
         String expectedBirthDate = formatBirthday(dayOfBirth, monthOfBirth, yearOfBirth);
         if (!Objects.equals(currentBirthDate, expectedBirthDate)) {
             updateActions.add(() -> {
@@ -138,7 +135,6 @@ public class PersonalAccountPage extends ParentPage {
             });
         }
 
-        // Якщо були зміни — виконуємо апдейт
         if (!updateActions.isEmpty()) {
             updateActions.forEach(Runnable::run);
             clickOnSaveButton();
