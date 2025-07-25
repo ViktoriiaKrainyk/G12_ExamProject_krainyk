@@ -200,6 +200,15 @@ public class CommonActionsWithElements {
         }
     }
 
+    protected void refreshPage() {
+        try {
+            webDriver.navigate().refresh();
+            logger.info("Page was refreshed");
+        } catch (Exception e) {
+            printErrorAndStopTest(e);
+        }
+    }
+
     private String getElementName(WebElement webElement) {
         try {
             return webElement.getAccessibleName();

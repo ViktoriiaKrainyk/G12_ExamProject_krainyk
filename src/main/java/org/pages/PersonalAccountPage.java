@@ -94,6 +94,12 @@ public class PersonalAccountPage extends ParentPage {
         return this;
     }
 
+    public PersonalAccountPage refreshPersonalAccountPage() {
+        refreshPage();
+        checkIsRedirectToPersonalAccountPage();
+        return this;
+    }
+
     public PersonalAccountPage checkUserContactInfo(String name, String surname, int date, int month, int year, String email) {
         checkValueInInputName(name);
         checkValueInInputSurname(surname);

@@ -34,6 +34,7 @@ public class AccountSettingsTests extends BaseTest {
                 .checkIsContactInfoTabIsActive()
                 .checkUserContactInfo(INITIAL_USER.name, INITIAL_USER.surname, INITIAL_USER.dayOfBirth, INITIAL_USER.monthOfBirth, INITIAL_USER.yearOfBirth, VALID_LOGIN_UI)
                 .updateUserContactInfo(UPDATED_USER.name, UPDATED_USER.surname, UPDATED_USER.dayOfBirth,UPDATED_USER.monthOfBirth, UPDATED_USER.yearOfBirth, DATASUCCESSFULLYSAVEDMESSAGE)
+                .refreshPersonalAccountPage()
                 .checkUserContactInfo(UPDATED_USER.name, UPDATED_USER.surname, UPDATED_USER.dayOfBirth,UPDATED_USER.monthOfBirth, UPDATED_USER.yearOfBirth, VALID_LOGIN_UI);
     }
 
