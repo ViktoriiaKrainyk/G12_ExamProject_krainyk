@@ -57,10 +57,12 @@ public class HomePage extends ParentPage {
     }
 
     public HomePage openLoginPopUpAndFillLoginFormIfNeeded() {
+        openHomePage();
         getHeaderElement();
         if (getHeaderElement().isAccountButtonForLoggedUser()) {
             logger.info("User is already logged in");
         } else {
+            openHomePage();
             getHeaderElement().clickOnLoginToAccountButton()
                     .getAuthForm()
                     .enterTextInInputEmail(VALID_LOGIN_UI)

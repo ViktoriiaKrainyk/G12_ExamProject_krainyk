@@ -3,6 +3,7 @@ package org.accountSettingsTests;
 import org.baseTest.BaseTest;
 import org.data.UserData;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.data.TestLoginData.VALID_LOGIN_UI;
@@ -13,6 +14,15 @@ public class AccountSettingsTests extends BaseTest {
 
     final String DATASUCCESSFULLYSAVEDMESSAGE = "Відмінно! Данні успішно збережені";
 
+    @Before
+    public void checkContactInfoAndUpdateIfNeeded() throws InterruptedException {
+        logger.info("Pre condition - reset contact info to default state");
+        pageProvider.getHomePage()
+                .openLoginPopUpAndFillLoginFormIfNeeded()
+                .getHeaderElement().clickOnAccountButton()
+                .checkIsRedirectToPersonalAccountPage()
+                .updateUserContactInfoIfNeeded(INITIAL_USER.name, INITIAL_USER.surname, INITIAL_USER.dayOfBirth, INITIAL_USER.monthOfBirth, INITIAL_USER.yearOfBirth, DATASUCCESSFULLYSAVEDMESSAGE);
+    }
 
     @Test
     public void updateContanctInfoTest() {
