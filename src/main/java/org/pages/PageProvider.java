@@ -16,4 +16,48 @@ public class PageProvider {
     public PersonalAccountPage getPersonalAccountPage() {
         return new PersonalAccountPage(webDriver);
     }
+
+    public ParfumsPage getParfumsPage() {
+        return new ParfumsPage(webDriver);
+    }
+
+    public MakeUpPage getMakeUpPage() {
+        return new MakeUpPage(webDriver);
+    }
+
+    public HairCosmeticsPage getHairCosmeticsPage() {
+        return new HairCosmeticsPage(webDriver);
+    }
+
+    public FaceCosmeticsPage getFaceCosmeticsPage() {
+        return new FaceCosmeticsPage(webDriver);
+    }
+
+    public PharmacyCosmeticsMenu getPharmacyCosmeticsMenu() {
+        return new PharmacyCosmeticsMenu(webDriver);
+    }
+
+    public CosmeticsForTheBodyPage getCosmeticsForTheBodyPage() {
+        return new CosmeticsForTheBodyPage(webDriver);
+    }
+
+    public CosmeticsForNailsPage getCosmeticsForNailsPage() {
+        return new CosmeticsForNailsPage(webDriver);
+    }
+
+    public EverythingForHomePage getEverythingForHomePage() {
+        return new EverythingForHomePage(webDriver);
+    }
+
+    public BabyCarePage getBabyCarePage() {
+        return new BabyCarePage(webDriver);
+    }
+
+    public MenCosmeticsPage getMenCosmeticsPage() {
+        return new MenCosmeticsPage(webDriver);
+    }
+
+    public HealthAndCarePage getHealthAndCarePage() {
+        return new HealthAndCarePage(webDriver);
+    }
 }

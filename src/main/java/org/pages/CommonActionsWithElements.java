@@ -20,7 +20,7 @@ public class CommonActionsWithElements {
 
     public CommonActionsWithElements(WebDriver webDriver) {
         this.webDriver = webDriver;
-        PageFactory.initElements(webDriver, this); // Initialize the elements described in this class in FindBy annotations
+        PageFactory.initElements(webDriver, this);
         webDriverWait5 =  new WebDriverWait(webDriver, Duration.ofSeconds(5));
         webDriverWait10 = new WebDriverWait(webDriver, Duration.ofSeconds(10));
         webDriverWait15 = new WebDriverWait(webDriver, Duration.ofSeconds(15));
@@ -197,6 +197,15 @@ public class CommonActionsWithElements {
         } catch (Exception e) {
             logger.info("Error while checking if tab is active: " + e.getMessage());
             return false;
+        }
+    }
+
+    protected void refreshPage() {
+        try {
+            webDriver.navigate().refresh();
+            logger.info("Page was refreshed");
+        } catch (Exception e) {
+            printErrorAndStopTest(e);
         }
     }
 

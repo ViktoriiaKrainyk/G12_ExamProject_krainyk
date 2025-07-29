@@ -10,7 +10,7 @@ import static org.data.TestLoginData.VALID_PASSWORD_UI;
 public class LoginTests extends BaseTest {
 
     @Test
-    public void validLoginTest() {
+    public void TC01_validLoginTest() {
         pageProvider.getHomePage()
                 .openHomePage()
                 .checkIsRedirectToHomePage()
