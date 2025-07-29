@@ -25,7 +25,7 @@ public class AccountSettingsTests extends BaseTest {
     }
 
     @Test
-    public void updateContanctInfoTest() {
+    public void TC02_updateContanctInfoTest() {
         pageProvider.getHomePage()
                 .openLoginPopUpAndFillLoginFormWithValidData()
                 .checkIsRedirectToHomePage()

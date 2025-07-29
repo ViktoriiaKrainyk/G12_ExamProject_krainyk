@@ -1,14 +1,17 @@
 package org.pages.elements;
 
 import org.apache.log4j.Logger;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.pages.PersonalAccountPage;
-import org.pages.CommonActionsWithElements;
+import org.pages.*;
+
+import java.util.List;
 
 public class HeaderElement extends CommonActionsWithElements {
     Logger logger = Logger.getLogger(getClass());
+    PageProvider pageProvider = new PageProvider(webDriver);
 
     @FindBy(xpath = "//div[@id='profile_desktop']//button[contains(@class,'profile')]")
     private WebElement loginToAccountButton;
@@ -18,6 +21,39 @@ public class HeaderElement extends CommonActionsWithElements {
 
     @FindBy(xpath = "//button[@id='favorites']//span[@class='favourite-count']")
     private WebElement favoritesCount;
+
+    @FindBy(xpath = "//a[contains(@class, 'menu_link') and @href='/ua/category/parfums/']")
+    private WebElement parfumsMenu;
+
+    @FindBy(xpath = "//a[contains(@class, 'menu_link') and @href='/ua/category/makeup/']")
+    private WebElement makeupMenu;
+
+    @FindBy(xpath = "//a[contains(@class, 'menu_link') and @href='/ua/category/hair-cosmetics/']")
+    private WebElement hairCosmeticsMenu;
+
+    @FindBy(xpath = "//a[contains(@class, 'menu_link') and @href='/ua/category/cosmetics-for-the-face/']")
+    private WebElement faceCosmeticsMenu;
+
+    @FindBy(xpath = "//a[contains(@class, 'menu_link') and @href='/ua/category/aptechnaya-kosmetika/']")
+    private WebElement pharmacyCosmeticsMenu;
+
+    @FindBy(xpath = "//a[contains(@class, 'menu_link') and @href='/ua/category/cosmetics-for-the-body/']")
+    private WebElement cosmeticsToTheBodyMenu;
+
+    @FindBy(xpath = "//a[contains(@class, 'menu_link') and @href='/ua/category/cosmetics-for-nails/']")
+    private WebElement cosmeticsForNailsMenu;
+
+    @FindBy(xpath = "//a[contains(@class, 'menu_link') and @href='/ua/category/bytovaya_khimiya/']")
+    private WebElement everythingForHomeMenu;
+
+    @FindBy(xpath = "//a[contains(@class, 'menu_link') and @href='/ua/category/baby-care/']")
+    private WebElement babyCareMenu;
+
+    @FindBy(xpath = "//a[contains(@class, 'menu_link') and @href='/ua/category/mugskaya-kosmetika/']")
+    private WebElement menCosmeticsMenu;
+
+    @FindBy(xpath = "//a[contains(@class, 'menu_link') and @href='/ua/category/health-and-care/']")
+    private WebElement healthAndCareMenu;
 
     public HeaderElement(WebDriver webDriver) {
         super(webDriver);
@@ -83,5 +119,139 @@ public class HeaderElement extends CommonActionsWithElements {
         clickOnElement(accountButton);
         logger.info("Click on Account Button");
         return new PersonalAccountPage(webDriver);
+    }
+
+    public ParfumsPage navigateToParfumsMenuAndCheck() {
+        clickOnElement(parfumsMenu);
+        ParfumsPage parfumsPage =
+                pageProvider.getParfumsPage()
+                        .checkIsRedirectToParfumsPage();
+        return parfumsPage;
+    }
+
+    public MakeUpPage navigateToMakeupMenuAndCheck() {
+        clickOnElement(makeupMenu);
+        MakeUpPage makeUpPage =
+                pageProvider.getMakeUpPage()
+                        .checkIsRedirectToMakeupPage();
+        return makeUpPage;
+    }
+
+    public HairCosmeticsPage navigateToHairCosmeticsMenuAndCheck() {
+        clickOnElement(hairCosmeticsMenu);
+        HairCosmeticsPage hairCosmeticsPage =
+                pageProvider.getHairCosmeticsPage()
+                        .checkIsRedirectToHairCosmeticsPage();
+        return hairCosmeticsPage;
+    }
+
+    public FaceCosmeticsPage navigateToFaceCosmeticsMenuAndCheck() {
+        clickOnElement(faceCosmeticsMenu);
+        FaceCosmeticsPage faceCosmeticsPage =
+                pageProvider.getFaceCosmeticsPage()
+                        .checkIsRedirectToFaceCosmeticsPage();
+        return faceCosmeticsPage;
+    }
+
+    public PharmacyCosmeticsMenu navigateToPharmacyCosmeticsMenuAndCheck() {
+        clickOnElement(pharmacyCosmeticsMenu);
+        PharmacyCosmeticsMenu pharmacyCosmeticsMenu =
+                pageProvider.getPharmacyCosmeticsMenu()
+                        .checkIsRedirectToPharmacyCosmeticsMenu();
+        return pharmacyCosmeticsMenu;
+    }
+
+    public CosmeticsForTheBodyPage navigateToCosmeticsForTheBodyMenuAndCheck() {
+        clickOnElement(cosmeticsToTheBodyMenu);
+        CosmeticsForTheBodyPage cosmeticsForTheBodyPage =
+                pageProvider.getCosmeticsForTheBodyPage()
+                        .checkIsRedirectToCosmeticsForTheBodyPage();
+        return cosmeticsForTheBodyPage;
+    }
+
+    public CosmeticsForNailsPage navigateToCosmeticsForNailsMenuAndCheck() {
+        clickOnElement(cosmeticsForNailsMenu);
+        CosmeticsForNailsPage cosmeticsForNailsPage =
+                pageProvider.getCosmeticsForNailsPage()
+                        .checkIsRedirectToCosmeticsForNailsPage();
+        return cosmeticsForNailsPage;
+    }
+
+    public EverythingForHomePage navigateToEverythingForHomeMenuAndCheck() {
+        clickOnElement(everythingForHomeMenu);
+        EverythingForHomePage everythingForHomePage =
+                pageProvider.getEverythingForHomePage()
+                        .checkIsRedirectToEverythingForHomePage();
+        return everythingForHomePage;
+    }
+
+    public BabyCarePage navigateToBabyCareMenuAndCheck() {
+        clickOnElement(babyCareMenu);
+        BabyCarePage babyCarePage =
+                pageProvider.getBabyCarePage()
+                        .checkIsRedirectToBabyCarePage();
+        return babyCarePage;
+    }
+
+    public MenCosmeticsPage navigateToMenCosmeticsMenuAndCheck() {
+        clickOnElement(menCosmeticsMenu);
+        MenCosmeticsPage menCosmeticsPage =
+                pageProvider.getMenCosmeticsPage()
+                        .checkIsRedirectToMenCosmeticsPage();
+        return menCosmeticsPage;
+    }
+
+    public HealthAndCarePage navigateToHealthAndCareMenuAndCheck() {
+        clickOnElement(healthAndCareMenu);
+        HealthAndCarePage healthAndCarePage =
+                pageProvider.getHealthAndCarePage()
+                        .checkIsRedirectToHealthAndCarePage();
+        return healthAndCarePage;
+    }
+
+    public void checkMenu(List<String> optionsForNavigation){
+        for (String menuItem : optionsForNavigation) {
+            switch (menuItem) {
+                case "Parfums":
+                    pageProvider.getParfumsPage().getHeaderElement().navigateToParfumsMenuAndCheck();
+                    break;
+                case "Makeup":
+                    pageProvider.getMakeUpPage().getHeaderElement().navigateToMakeupMenuAndCheck();
+                    break;
+                case "HairCosmetics":
+                    pageProvider.getHairCosmeticsPage().getHeaderElement().navigateToHairCosmeticsMenuAndCheck();
+                    break;
+                case "FaceCosmetics":
+                    pageProvider.getFaceCosmeticsPage().getHeaderElement().navigateToFaceCosmeticsMenuAndCheck();
+                    break;
+                case "PharmacyCosmetics":
+                    pageProvider.getPharmacyCosmeticsMenu().getHeaderElement().navigateToPharmacyCosmeticsMenuAndCheck();
+                    break;
+                case "CosmeticsForTheBody":
+                    pageProvider.getCosmeticsForTheBodyPage().getHeaderElement().navigateToCosmeticsForTheBodyMenuAndCheck();
+                    break;
+                case "CosmeticsForNails":
+                    pageProvider.getCosmeticsForNailsPage().getHeaderElement().navigateToCosmeticsForNailsMenuAndCheck();
+                    break;
+                case "EverythingForHome":
+                    pageProvider.getEverythingForHomePage().getHeaderElement().navigateToEverythingForHomeMenuAndCheck();
+                    break;
+                case "BabyCare":
+                    pageProvider.getBabyCarePage().getHeaderElement().navigateToBabyCareMenuAndCheck();
+                    break;
+                case "MenCosmetics":
+                    pageProvider.getMenCosmeticsPage().getHeaderElement().navigateToMenCosmeticsMenuAndCheck();
+                    break;
+                case "HealthAndCare":
+                    pageProvider.getHealthAndCarePage().getHeaderElement().navigateToHealthAndCareMenuAndCheck();
+                    break;
+                case "Home":
+                    pageProvider.getHomePage().openHomePage()
+                            .checkIsRedirectToHomePage();
+                    break;
+                default:
+                    throw new IllegalArgumentException("!!!UNKNOWN MENU ITEM: " + menuItem);
+            }
+        }
     }
 }
