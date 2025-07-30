@@ -249,12 +249,12 @@ public class PersonalAccountPage extends ParentPage {
                 By.xpath("//ul[@class='private-office__tabs']//li"));
     }
 
-    private void checkIsTabActive(WebElement tab, String elementName) {
+    protected void checkIsTabActive(WebElement tab, String elementName) {
         Assert.assertTrue("Tab is not active, but it should be", isActiveElement(tab, elementName));
         logger.info("Tab is active as expected");
     }
 
-    private PersonalAccountPage checkOnlyOneTabIsActive() {
+    protected void checkOnlyOneTabIsActive() {
         List<WebElement> tabs = getListOfTabs();
         int activeTabsCount = Math.toIntExact(tabs.stream()
                 .filter(this::isActiveElement)
@@ -262,7 +262,6 @@ public class PersonalAccountPage extends ParentPage {
 
         Assert.assertEquals("Number of active tabs is not as expected", 1, activeTabsCount);
         logger.info("Number of active tabs: " + activeTabsCount);
-        return this;
     }
 
     private String formatBirthday(int day, int month, int year) {

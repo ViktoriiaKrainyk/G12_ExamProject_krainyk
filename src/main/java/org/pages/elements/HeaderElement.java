@@ -19,6 +19,9 @@ public class HeaderElement extends CommonActionsWithElements {
     @FindBy(xpath = "//a[@id='profile_desktop']//button[contains(@class,'profile')]")
     private WebElement accountButton;
 
+    @FindBy(xpath = "//button[@id='favorites']")
+    private WebElement favoriteButton;
+
     @FindBy(xpath = "//button[@id='favorites']//span[@class='favourite-count']")
     private WebElement favoritesCount;
 
@@ -54,6 +57,9 @@ public class HeaderElement extends CommonActionsWithElements {
 
     @FindBy(xpath = "//a[contains(@class, 'menu_link') and @href='/ua/category/health-and-care/']")
     private WebElement healthAndCareMenu;
+
+    @FindBy(xpath = "//a[@href='/markdowned']")
+    private WebElement saleMenu;
 
     public HeaderElement(WebDriver webDriver) {
         super(webDriver);
@@ -107,11 +113,30 @@ public class HeaderElement extends CommonActionsWithElements {
         return this;
     }
 
+    public HeaderElement checkFavoritesCount(int expectedCount) {
+        checkTextInElement(favoritesCount, "(" + expectedCount + ")");
+        return this;
+    }
+
+    public FavoritePage clickOnFavoriteButton() {
+        clickOnElement(favoriteButton);
+        logger.info("Click on Favorite Button");
+        return new FavoritePage(webDriver);
+    }
+
     public HeaderElement checkLoginSuccess (String accountButtonText) {
                 checkAccountButtonIsDisplayed();
                 checkTextInAccountButton(accountButtonText);
                 checkLoginToAccountButtonIsNotDisplayed();
                 checkFavoritesCountIsDisplayed();;
+        return this;
+    }
+
+    public HeaderElement checkLoginSuccessWithFavoritesCount(int expectedFavoritesCount) {
+        checkAccountButtonIsDisplayed();
+        checkLoginToAccountButtonIsNotDisplayed();
+        checkFavoritesCountIsDisplayed();
+        checkFavoritesCount(expectedFavoritesCount);
         return this;
     }
 
@@ -209,6 +234,14 @@ public class HeaderElement extends CommonActionsWithElements {
         return healthAndCarePage;
     }
 
+    public SalePage navigateToSaleMenuAndCheck() {
+        clickOnElement(saleMenu);
+        SalePage salePage =
+                pageProvider.getSalePage()
+                        .checkIsRedirectToSalePage();
+        return salePage;
+    }
+
     public void checkMenu(List<String> optionsForNavigation){
         for (String menuItem : optionsForNavigation) {
             switch (menuItem) {
@@ -248,6 +281,9 @@ public class HeaderElement extends CommonActionsWithElements {
                 case "Home":
                     pageProvider.getHomePage().openHomePage()
                             .checkIsRedirectToHomePage();
+                    break;
+                case "Sale":
+                    pageProvider.getSalePage().getHeaderElement().navigateToSaleMenuAndCheck();
                     break;
                 default:
                     throw new IllegalArgumentException("!!!UNKNOWN MENU ITEM: " + menuItem);

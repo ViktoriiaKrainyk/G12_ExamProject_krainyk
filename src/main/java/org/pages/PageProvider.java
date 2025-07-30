@@ -60,4 +60,16 @@ public class PageProvider {
     public HealthAndCarePage getHealthAndCarePage() {
         return new HealthAndCarePage(webDriver);
     }
+
+    public FavoritePage getFavoritePage() {
+        return new FavoritePage(webDriver);
+    }
+
+    public SalePage getSalePage() {
+        return new SalePage(webDriver);
+    }
+
+    public ProductPage getProductPage() {
+        return new ProductPage(webDriver);
+    }
 }
