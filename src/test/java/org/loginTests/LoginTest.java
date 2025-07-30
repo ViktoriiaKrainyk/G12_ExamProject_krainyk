@@ -7,7 +7,7 @@ import static org.data.AuthFormFieldsData.*;
 import static org.data.TestLoginData.VALID_LOGIN_UI;
 import static org.data.TestLoginData.VALID_PASSWORD_UI;
 
-public class LoginTests extends BaseTest {
+public class LoginTest extends BaseTest {
 
     @Test
     public void TC01_validLoginTest() {

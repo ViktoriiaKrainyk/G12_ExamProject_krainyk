@@ -69,7 +69,7 @@ Poastconditions:
 1. User is logged in with valid credentials if not already logged in
 2. Delete the product from Favorites if it was added during the test
 
-#05 - Test for navigating to the Sale page and adding a product to the cart
+#05 - Test for adding a product to the cart
 Preconditions:
 1. Open HomePage
 2. Check the count of products in the cart

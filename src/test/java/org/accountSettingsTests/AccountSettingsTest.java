@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import static org.data.TestLoginData.VALID_LOGIN_UI;
 
-public class AccountSettingsTests extends BaseTest {
+public class AccountSettingsTest extends BaseTest {
     final UserData INITIAL_USER = new UserData("Viktoriia", "Krainyk", 21, 4, 1993);
     final UserData UPDATED_USER = new UserData("Vika", "Krain", 3, 12, 2013);
 
