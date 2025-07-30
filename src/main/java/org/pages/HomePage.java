@@ -35,7 +35,7 @@ public class HomePage extends ParentPage {
         return new HeaderElement(webDriver);
     }
 
-    public HomePage openLoginPopUpAndFillLoginFormWithValidData() {
+    public HomePage openAuthFormAndFillLoginFormWithValidData() {
         openHomePage();
         getHeaderElement()
                 .clickOnLoginToAccountButton()

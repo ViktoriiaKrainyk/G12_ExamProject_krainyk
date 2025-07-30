@@ -1,0 +1,97 @@
+#01 - Test for valid login
+Steps:
+1. Open HomePage
+2. Check the redirection to HomePage
+3. Check the presence of LoginToAccount button
+4. Check the text of the LoginToAccount button
+5. Check the count of Favorites on the button is not displayed for non logged-in users
+6. Click on the LoginToAccount button
+7. Check the Authorization form
+8. Enter valid login and password
+9. Click on the Sign In button
+10. Check the Authorization form is closed
+11. Check the redirection to HomePage
+12. Check the Account button is displayed
+13. Check the count of Favorites on the Account button is displayed
+
+#02 - Test for updating contact information
+Preconditions:
+1. User is logged in with valid credentials
+2. Update the contact information fields with valid data and save
+
+Steps:
+1. Open HomePage
+2. Open Authorization form and enter valid login and password
+3. Click on the Sign In button
+4. Check the redirection to HomePage
+5. Click on the Account button
+6. Check is Personal Account page is opened
+7. Check the presence tabs on the Personal Account page
+8. Check that the Contact Information tab is active
+9. Check initial values of contact information fields (from preconditions)
+10. Update the contact information fields with valid data and save
+11. Refresh the page
+12. Check that the updated contact information is displayed correctly
+
+Postconditions:
+1. User is logged in with valid credentials if not already logged in
+2. Update the contact information fields with valid data (from preconditions)
+
+#03 - Test for navigating in header menu
+Steps:
+1. Open HomePage
+2. Navigate in header menu beetween different menu items
+3. Check the redirection to the selected page is correct
+
+#04 - Test for adding a product to Favorites
+Preconditions:
+1. User is logged in with valid credentials
+2. Check the count of Favorites on the button
+3. Delete all products from Favorites if any exist
+
+Steps:
+1. Open HomePage
+2. Open Authorization form and enter valid login and password
+3. Click on the Sign In button
+4. Check the redirection to HomePage
+5. Check the count of Favorites on the button is 0
+6. Open Favorites page and check the Favorites page is empty
+7. Navigate to a Parfums page
+8. Check the redirection to Parfums page
+9. Check the presence of products on the Parfums page
+10. Select a product and check the product details page is opened
+11. Click on the Add to Favorites button
+12. Check the product is added to Favorites
+13. Check the count of Favorites on the button is updated to 1
+14. Open Favorites page and check the product is displayed in Favorites
+
+Poastconditions:
+1. User is logged in with valid credentials if not already logged in
+2. Delete the product from Favorites if it was added during the test
+
+#05 - Test for navigating to the Sale page and adding a product to the cart
+Preconditions:
+1. Open HomePage
+2. Check the count of products in the cart
+2. Delete all products from the cart if any exist
+
+Steps:
+1. Open HomePage
+2. Check the redirection to HomePage
+3. Check the presence of Sale button in header menu
+4. Click on the Sale button
+5. Check the redirection to Sale page
+6. Check the presence of products on the Sale page
+7. Select a product and check the product details page is opened
+8. Check the presence of Add to Cart button
+9. Click on the Add to Cart button
+10. Check the product is added to the cart
+11. Check the count of products in the cart is updated
+12. Open Cart page and check the product is displayed in the cart
+
+Postconditions:
+1. Open HomePage
+2. Check the count of products in the cart
+3. Delete the product from the cart if it was added during the test
+
+

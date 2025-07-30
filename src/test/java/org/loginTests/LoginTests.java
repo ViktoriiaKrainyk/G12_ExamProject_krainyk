@@ -17,7 +17,6 @@ public class LoginTests extends BaseTest {
                 .getHeaderElement()
                 .checkLoginToAccountButtonIsDisplayed()
                 .checkTextInLoginToAccountButton(LOGIN_TO_ACCOUNT_BUTTON_TEXT)
-
                 .checkFavoritesCountIsNotDisplayed()
                 .clickOnLoginToAccountButton()
                 .getAuthForm()
