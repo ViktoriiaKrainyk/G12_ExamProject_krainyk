@@ -62,13 +62,11 @@ public class AuthForm extends CommonActionsWithElements {
 
     private AuthForm checkAuthFormIsDisplayed() {
         webDriverWait10.until(ExpectedConditions.visibilityOf(authForm));
-        checkIsElementDisplayed(authForm, "Autorization form");
         return this;
     }
 
     public AuthForm checkAuthFormIsNotDisplayed() {
         webDriverWait10.until(ExpectedConditions.invisibilityOf(authForm));
-        checkIsElementNotDisplayed(authForm);
         return this;
     }
 
@@ -138,6 +136,7 @@ public class AuthForm extends CommonActionsWithElements {
     }
 
     public AuthForm enterTextInInputEmail(String email) {
+        webDriverWait10.until(ExpectedConditions.elementToBeClickable(inputEmail));
         clearAndEnterTextToElement(inputEmail, email);
         return this;
     }

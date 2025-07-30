@@ -268,7 +268,7 @@ public class PersonalAccountPage extends ParentPage {
         return String.format("%02d.%02d.%d", day, month, year);
     }
 
-    private HomePage clickOnExitButton() {
+    public HomePage clickOnExitButton() {
         clickOnElement(exitButton, "Exit button");
         logger.info("Exit button was clicked");
         return new HomePage(webDriver);

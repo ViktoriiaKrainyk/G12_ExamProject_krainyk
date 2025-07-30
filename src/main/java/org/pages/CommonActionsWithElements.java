@@ -209,6 +209,10 @@ public class CommonActionsWithElements {
         }
     }
 
+    protected boolean isCheckboxChecked(WebElement webElement) {
+        return webElement.isSelected();
+    }
+
     private String getElementName(WebElement webElement) {
         try {
             return webElement.getAccessibleName();

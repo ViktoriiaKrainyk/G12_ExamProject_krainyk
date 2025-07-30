@@ -2,9 +2,12 @@ package org.pages.elements;
 
 import org.apache.log4j.Logger;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.pages.*;
 
 import java.util.List;
@@ -58,7 +61,7 @@ public class HeaderElement extends CommonActionsWithElements {
     @FindBy(xpath = "//a[contains(@class, 'menu_link') and @href='/ua/category/health-and-care/']")
     private WebElement healthAndCareMenu;
 
-    @FindBy(xpath = "//a[@href='/markdowned']")
+    @FindBy(xpath = "//a[@class='nav_link sale']")
     private WebElement saleMenu;
 
     public HeaderElement(WebDriver webDriver) {
@@ -118,11 +121,28 @@ public class HeaderElement extends CommonActionsWithElements {
         return this;
     }
 
+//    public FavoritePage clickOnFavoriteButton() {
+//        clickOnElement(favoriteButton);
+//        logger.info("Click on Favorite Button");
+//        return new FavoritePage(webDriver);
+//    }
+
     public FavoritePage clickOnFavoriteButton() {
-        clickOnElement(favoriteButton);
-        logger.info("Click on Favorite Button");
-        return new FavoritePage(webDriver);
+        int attempts = 0;
+        while (attempts < 3) {
+            try {
+                WebElement freshFavoriteButton = webDriverWait10.until(ExpectedConditions.elementToBeClickable(By.id("favorites")));
+                freshFavoriteButton.click();
+                logger.info("Click on Favorite Button");
+                return new FavoritePage(webDriver);
+            } catch (StaleElementReferenceException e) {
+                attempts++;
+                logger.warn("StaleElementReferenceException on attempt " + attempts);
+            }
+        }
+        throw new RuntimeException("Failed to click on Favorite Button after several attempts.");
     }
+
 
     public HeaderElement checkLoginSuccess (String accountButtonText) {
                 checkAccountButtonIsDisplayed();

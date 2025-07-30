@@ -65,7 +65,7 @@ Steps:
 13. Check the count of Favorites on the button is updated to 1
 14. Open Favorites page and check the product is displayed in Favorites
 
-Poastconditions:
+Postconditions:
 1. User is logged in with valid credentials if not already logged in
 2. Delete the product from Favorites if it was added during the test
 
