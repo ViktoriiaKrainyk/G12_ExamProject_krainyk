@@ -152,5 +152,9 @@ public class FavoritePage extends PersonalAccountPage {
         return this;
     }
 
-
+    public FavoritePage refreshFavoritePage() {
+        refreshPage();
+        checkIsRedirectToFavoritePage();
+        return this;
+    }
 }

@@ -121,11 +121,18 @@ public class HeaderElement extends CommonActionsWithElements {
         return this;
     }
 
-//    public FavoritePage clickOnFavoriteButton() {
-//        clickOnElement(favoriteButton);
-//        logger.info("Click on Favorite Button");
-//        return new FavoritePage(webDriver);
-//    }
+    public int getFavoritesCount() {
+        String text = favoritesCount.getText().trim(); // очікується формат типу "(3)"
+        int count;
+        if (text.matches("\\(\\d+\\)")) {
+            count = Integer.parseInt(text.replaceAll("[()]", ""));
+            logger.info("Favorites count is: " + text);
+            return count;
+        } else {
+            throw new IllegalStateException("Unexpected favorites count format: '" + text + "'");
+        }
+    }
+
 
     public FavoritePage clickOnFavoriteButton() {
         int attempts = 0;

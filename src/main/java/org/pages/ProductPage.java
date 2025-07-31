@@ -1,5 +1,6 @@
 package org.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -57,17 +58,6 @@ public class ProductPage extends ParentPage {
         clickOnElement(buttonAddToFavorite, "Button Add to Favorite");
         return this;
     }
-
-    // Notification about adding to favorite is displayed
-    // Confirming the action in the alert dialog if necessary
-    // Extracting product ID from the button element
-    // Assuming the product ID is stored in a data attribute of the button
-//    String dataId = buttonAddToFavorite.getAttribute("data-id");
-//        if (dataId == null || dataId.isEmpty()) {
-//        logger.error("Product ID is not found in the Add to Favorite button");
-//        throw new NoSuchElementException("Product ID is not found in the Add to Favorite button");
-//    }
-//        logger.info("Product articule '" + dataId + "' was added to favorite");
 
     public ProductPage checkMonitorPriceChangesPopupIsDisplayed() {
         webDriverWait15.until(ExpectedConditions.visibilityOf(popupWindow));

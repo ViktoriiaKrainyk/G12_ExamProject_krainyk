@@ -16,7 +16,7 @@ public class AccountSettingsTest extends BaseTest {
 
     @Before
     public void checkContactInfoAndUpdateIfNeeded() {
-        logger.info("Pre condition - reset contact info to default state");
+        logger.info("Precondition - reset contact info to default state");
         pageProvider.getHomePage()
                 .openLoginPopUpAndFillLoginFormIfNeeded()
                 .getHeaderElement().clickOnAccountButton()
@@ -40,7 +40,7 @@ public class AccountSettingsTest extends BaseTest {
 
     @After
     public void resetContactInfo() {
-        logger.info("Post condition - reset contact info to previous state");
+        logger.info("Postcondition - reset contact info to previous state");
         pageProvider.getHomePage()
                 .openLoginPopUpAndFillLoginFormIfNeeded()
                 .getHeaderElement().clickOnAccountButton()

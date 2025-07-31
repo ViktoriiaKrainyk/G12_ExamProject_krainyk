@@ -11,7 +11,7 @@ public class AddProductToFavoriteTest extends BaseTest {
 
     @Before
     public void deletedAllProductsFromFavorite() {
-        logger.info("Post condition - delete test");
+        logger.info("Precondition - delete all favorites");
         pageProvider.getHomePage()
                 .openLoginPopUpAndFillLoginFormIfNeeded();
         pageProvider.getHomePage()
@@ -51,7 +51,7 @@ public class AddProductToFavoriteTest extends BaseTest {
 
     @After
     public void deleteAddedProductFromFavorite() {
-        logger.info("Post condition - delete test");
+        logger.info("Postcondition - delete all favorites");
         pageProvider.getHomePage()
                 .openLoginPopUpAndFillLoginFormIfNeeded()
                 .getHeaderElement().clickOnFavoriteButton()
