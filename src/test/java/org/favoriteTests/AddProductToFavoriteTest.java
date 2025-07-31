@@ -17,7 +17,9 @@ public class AddProductToFavoriteTest extends BaseTest {
         pageProvider.getHomePage()
                 .getHeaderElement().clickOnFavoriteButton()
                 .checkIsRedirectToFavoritePage()
-                .removeAllItemsFromFavorites();
+                .removeAllItemsFromFavorites()
+                .refreshFavoritePage()
+                .checkFavoriteListSize(0);
         pageProvider.getPersonalAccountPage().clickOnExitButton();
     }
 
@@ -53,9 +55,13 @@ public class AddProductToFavoriteTest extends BaseTest {
     public void deleteAddedProductFromFavorite() {
         logger.info("Postcondition - delete all favorites");
         pageProvider.getHomePage()
-                .openLoginPopUpAndFillLoginFormIfNeeded()
+                .openLoginPopUpAndFillLoginFormIfNeeded();
+        pageProvider.getHomePage()
                 .getHeaderElement().clickOnFavoriteButton()
                 .checkIsRedirectToFavoritePage()
-                .removeItemFromFavoritesByProductId(PRODUCT_ID);
+                .removeAllItemsFromFavorites()
+                .refreshFavoritePage()
+                .checkFavoriteListSize(0);
+        pageProvider.getPersonalAccountPage().clickOnExitButton();
     }
 }

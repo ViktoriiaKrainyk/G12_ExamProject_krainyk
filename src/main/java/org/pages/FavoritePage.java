@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FavoritePage extends PersonalAccountPage {
@@ -75,7 +76,6 @@ public class FavoritePage extends PersonalAccountPage {
             button.click();
             webDriverWait10.until(ExpectedConditions.stalenessOf(button));
 
-            // Оновлюємо список елементів після кожного кліку
             countOfRemovedItems++;
             logger.info("Removed an item from favorites. Removed items: " + countOfRemovedItems + "/" + initialSize);
         }
@@ -108,6 +108,7 @@ public class FavoritePage extends PersonalAccountPage {
         removeButton.click();
         webDriverWait10.until(ExpectedConditions.stalenessOf(item));
 
+        checkIsElementNotDisplayed(item);
         logger.info("Removed favorite item with productId = " + dataId);
         return this;
     }
@@ -156,5 +157,19 @@ public class FavoritePage extends PersonalAccountPage {
         refreshPage();
         checkIsRedirectToFavoritePage();
         return this;
+    }
+
+    public List<String> getAllProductIdsInFavorites() {
+        List<WebElement> productElements = webDriver.findElements(By.xpath("//li[@class[contains(., 'product-list__item')]]"));
+
+        List<String> productIds = new ArrayList<>();
+        for (WebElement element : productElements) {
+            String productId = element.getAttribute("data-id");
+            if (productId != null && !productId.isEmpty()) {
+                productIds.add(productId);
+            }
+        }
+        logger.info("Found " + productIds.size() + " products in favorites: " + productIds);
+        return productIds;
     }
 }
