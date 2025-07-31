@@ -1,0 +1,100 @@
+#01 - Test for valid login
+Steps:
+1. Open HomePage
+2. Check the redirection to HomePage
+3. Check the presence of LoginToAccount button
+4. Check the text of the LoginToAccount button
+5. Check the count of Favorites on the button is not displayed for non logged-in users
+6. Click on the LoginToAccount button
+7. Check the Authorization form
+8. Enter valid login and password
+9. Click on the Sign In button
+10. Check the Authorization form is closed
+11. Check the redirection to HomePage
+12. Check the Account button is displayed
+13. Check the count of Favorites on the Account button is displayed
+
+#02 - Test for updating contact information
+Preconditions:
+1. User is logged in with valid credentials
+2. Update the contact information fields with valid data and save
+
+Steps:
+1. Open HomePage
+2. Open Authorization form and enter valid login and password
+3. Click on the Sign In button
+4. Check the redirection to HomePage
+5. Click on the Account button
+6. Check is Personal Account page is opened
+7. Check the presence tabs on the Personal Account page
+8. Check that the Contact Information tab is active
+9. Check initial values of contact information fields (from preconditions)
+10. Update the contact information fields with valid data and save
+11. Refresh the page
+12. Check that the updated contact information is displayed correctly
+
+Postconditions:
+1. User is logged in with valid credentials if not already logged in
+2. Update the contact information fields with valid data (from preconditions)
+
+#03 - Test for navigating in header menu
+Steps:
+1. Open HomePage
+2. Navigate in header menu beetween different menu items
+3. Check the redirection to the selected page is correct
+
+#04 - Test for adding a product to Favorites
+Preconditions:
+1. User is logged in with valid credentials
+2. Check the count of Favorites on the button
+3. Delete all products from Favorites if any exist
+4. Log out
+
+Steps:
+1. Open HomePage
+2. Open Authorization form and enter valid login and password
+3. Click on the Sign In button
+4. Check the redirection to HomePage
+5. Check the count of Favorites on the button is 0
+6. Open Favorites page and check the Favorites page is empty
+7. Navigate to a Parfums page
+8. Check the redirection to Parfums page
+9. Check the presence of products on the Parfums page
+10. Select a product and check the product page is opened
+11. Click on the Add to Favorites button
+12. Click on MonitorPriceChangesButton: (yes)
+13. Check the count of Favorites on the button is updated to 1
+14. Open Favorites page and check the product is displayed in Favorites
+15. Check the MonitorPriceChanges checkbox is checked for the added product
+
+Postconditions:
+1. User is logged in with valid credentials if not already logged in
+2. Check the count of Favorites on the button
+3. Delete all products from Favorites if any exist
+
+#05 - Test for removing added product from Favorites
+Preconditions:
+1. User is logged in with valid credentials
+2. Open HomePage
+3. Cleenup the favorites to contain no more than 5 products
+4. Save productIds of the products in Favorites
+5. Click on the Add to Favorites button
+6. Click on MonitorPriceChangesButton: (no)
+7. Check the count of Favorites on the button is updated
+8. Log out
+
+Steps:
+1. Open HomePage
+2. Open Authorization form and enter valid login and password
+3. Click on the Sign In button
+4. Check the redirection to HomePage
+5. Check the count of Favorites on the button equals to the count after adding a new product in the preconditions
+6. Open Favorites page and check the redirection to Favorites page
+7. Check the presence of added product from preconditions in Favorites
+8. Check the MonitorPriceChanges checkbox is not checked for the added product
+9. Click on the Remove from Favorites button for the added product from preconditions
+10. Check the product is removed from Favorites
+11. Refresh the page
+12. Check the count of Favorites on the button is decreased by 1
+
+

@@ -2,9 +2,12 @@ package org.pages.elements;
 
 import org.apache.log4j.Logger;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.pages.*;
 
 import java.util.List;
@@ -18,6 +21,9 @@ public class HeaderElement extends CommonActionsWithElements {
 
     @FindBy(xpath = "//a[@id='profile_desktop']//button[contains(@class,'profile')]")
     private WebElement accountButton;
+
+    @FindBy(xpath = "//button[@id='favorites']")
+    private WebElement favoriteButton;
 
     @FindBy(xpath = "//button[@id='favorites']//span[@class='favourite-count']")
     private WebElement favoritesCount;
@@ -54,6 +60,9 @@ public class HeaderElement extends CommonActionsWithElements {
 
     @FindBy(xpath = "//a[contains(@class, 'menu_link') and @href='/ua/category/health-and-care/']")
     private WebElement healthAndCareMenu;
+
+    @FindBy(xpath = "//a[@class='nav_link sale']")
+    private WebElement saleMenu;
 
     public HeaderElement(WebDriver webDriver) {
         super(webDriver);
@@ -107,11 +116,54 @@ public class HeaderElement extends CommonActionsWithElements {
         return this;
     }
 
+    public HeaderElement checkFavoritesCount(int expectedCount) {
+        checkTextInElement(favoritesCount, "(" + expectedCount + ")");
+        return this;
+    }
+
+    public int getFavoritesCount() {
+        String text = favoritesCount.getText().trim(); // очікується формат типу "(3)"
+        int count;
+        if (text.matches("\\(\\d+\\)")) {
+            count = Integer.parseInt(text.replaceAll("[()]", ""));
+            logger.info("Favorites count is: " + text);
+            return count;
+        } else {
+            throw new IllegalStateException("Unexpected favorites count format: '" + text + "'");
+        }
+    }
+
+
+    public FavoritePage clickOnFavoriteButton() {
+        int attempts = 0;
+        while (attempts < 3) {
+            try {
+                WebElement freshFavoriteButton = webDriverWait10.until(ExpectedConditions.elementToBeClickable(By.id("favorites")));
+                freshFavoriteButton.click();
+                logger.info("Click on Favorite Button");
+                return new FavoritePage(webDriver);
+            } catch (StaleElementReferenceException e) {
+                attempts++;
+                logger.warn("StaleElementReferenceException on attempt " + attempts);
+            }
+        }
+        throw new RuntimeException("Failed to click on Favorite Button after several attempts.");
+    }
+
+
     public HeaderElement checkLoginSuccess (String accountButtonText) {
                 checkAccountButtonIsDisplayed();
                 checkTextInAccountButton(accountButtonText);
                 checkLoginToAccountButtonIsNotDisplayed();
                 checkFavoritesCountIsDisplayed();;
+        return this;
+    }
+
+    public HeaderElement checkLoginSuccessWithFavoritesCount(int expectedFavoritesCount) {
+        checkAccountButtonIsDisplayed();
+        checkLoginToAccountButtonIsNotDisplayed();
+        checkFavoritesCountIsDisplayed();
+        checkFavoritesCount(expectedFavoritesCount);
         return this;
     }
 
@@ -209,6 +261,14 @@ public class HeaderElement extends CommonActionsWithElements {
         return healthAndCarePage;
     }
 
+    public SalePage navigateToSaleMenuAndCheck() {
+        clickOnElement(saleMenu);
+        SalePage salePage =
+                pageProvider.getSalePage()
+                        .checkIsRedirectToSalePage();
+        return salePage;
+    }
+
     public void checkMenu(List<String> optionsForNavigation){
         for (String menuItem : optionsForNavigation) {
             switch (menuItem) {
@@ -248,6 +308,9 @@ public class HeaderElement extends CommonActionsWithElements {
                 case "Home":
                     pageProvider.getHomePage().openHomePage()
                             .checkIsRedirectToHomePage();
+                    break;
+                case "Sale":
+                    pageProvider.getSalePage().getHeaderElement().navigateToSaleMenuAndCheck();
                     break;
                 default:
                     throw new IllegalArgumentException("!!!UNKNOWN MENU ITEM: " + menuItem);

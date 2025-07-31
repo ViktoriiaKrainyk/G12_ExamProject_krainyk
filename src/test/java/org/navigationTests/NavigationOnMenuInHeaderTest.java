@@ -23,10 +23,10 @@ public class NavigationOnMenuInHeaderTest extends BaseTest {
     public List<List<String>> optionsForNavigation() {
         return Arrays.asList(
                 Arrays.asList("Makeup", "HealthAndCare", "Parfums", "CosmeticsForTheBody",
-                        "BabyCare", "FaceCosmetics", "CosmeticsForNails", "EverythingForHome",
+                        "BabyCare", "FaceCosmetics", "Sale", "CosmeticsForNails", "EverythingForHome",
                         "HairCosmetics", "Parfums", "PharmacyCosmetics", "MenCosmetics", "Home"),
                 Arrays.asList("MenCosmetics", "FaceCosmetics", "Home", "CosmeticsForNails", "MenCosmetics"),
-                Arrays.asList("HairCosmetics", "CosmeticsForNails", "PharmacyCosmetics", "CosmeticsForNails", "HairCosmetics"),
+                Arrays.asList("HairCosmetics", "CosmeticsForNails", "Sale", "PharmacyCosmetics", "CosmeticsForNails", "HairCosmetics"),
                 Arrays.asList("EverythingForHome", "PharmacyCosmetics", "CosmeticsForTheBody", "HealthAndCare", "Makeup")
         );
     }

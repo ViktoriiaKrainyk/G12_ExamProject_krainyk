@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import static org.data.TestLoginData.VALID_LOGIN_UI;
 
-public class AccountSettingsTests extends BaseTest {
+public class AccountSettingsTest extends BaseTest {
     final UserData INITIAL_USER = new UserData("Viktoriia", "Krainyk", 21, 4, 1993);
     final UserData UPDATED_USER = new UserData("Vika", "Krain", 3, 12, 2013);
 
@@ -16,7 +16,7 @@ public class AccountSettingsTests extends BaseTest {
 
     @Before
     public void checkContactInfoAndUpdateIfNeeded() {
-        logger.info("Pre condition - reset contact info to default state");
+        logger.info("Precondition - reset contact info to default state");
         pageProvider.getHomePage()
                 .openLoginPopUpAndFillLoginFormIfNeeded()
                 .getHeaderElement().clickOnAccountButton()
@@ -27,7 +27,7 @@ public class AccountSettingsTests extends BaseTest {
     @Test
     public void TC02_updateContanctInfoTest() {
         pageProvider.getHomePage()
-                .openLoginPopUpAndFillLoginFormWithValidData()
+                .openAuthFormAndFillLoginFormWithValidData()
                 .checkIsRedirectToHomePage()
                 .getHeaderElement().clickOnAccountButton()
                 .checkIsRedirectToPersonalAccountPage()
@@ -40,7 +40,7 @@ public class AccountSettingsTests extends BaseTest {
 
     @After
     public void resetContactInfo() {
-        logger.info("Post condition - reset contact info to previous state");
+        logger.info("Postcondition - reset contact info to previous state");
         pageProvider.getHomePage()
                 .openLoginPopUpAndFillLoginFormIfNeeded()
                 .getHeaderElement().clickOnAccountButton()
